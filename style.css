@@ -8,14 +8,18 @@
 .hero {
   position: relative;
   z-index: 2;
-}
-
+  height: 100vh;
+  background-image: url("ai.jpg");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
 }
 
 .overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
 }
 
 .content {
@@ -29,6 +33,7 @@
   color: white;
   text-align: center;
 }
+
 
 .content h1 {
   font-size: 56px;
