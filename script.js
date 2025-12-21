@@ -9,14 +9,15 @@ resize();
 window.addEventListener("resize", resize);
 
 const particles = [];
-const particleCount = 80;
+const particleCount = 120;
 
 for (let i = 0; i < particleCount; i++) {
   particles.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    speed: Math.random() * 1 + 0.3,
-    radius: Math.random() * 2 + 1
+    vx: (Math.random() - 0.5) * 0.6,
+    vy: (Math.random() - 0.5) * 0.6,
+    radius: Math.random() * 2.5 + 1.5
   });
 }
 
@@ -24,12 +25,17 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   particles.forEach(p => {
-    p.y -= p.speed;
-    if (p.y < 0) p.y = canvas.height;
+    p.x += p.vx;
+    p.y += p.vy;
+
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(0, 255, 255, 0.8)";
+    ctx.fillStyle = "rgba(0, 255, 255, 1)";
+    ctx.shadowColor = "rgba(0, 255, 255, 0.9)";
+    ctx.shadowBlur = 12;
     ctx.fill();
   });
 
