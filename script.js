@@ -56,6 +56,17 @@ else if (mode === "DISPERSE") {
   p.vx += (Math.random() - 0.5) * 0.5;
   p.vy += (Math.random() - 0.5) * 0.5;
 }
+if (mode === "FORM_TEXT" && textPoints[i]) {
+  const tx = textPoints[i].x;
+  const ty = textPoints[i].y;
+
+  p.vx += (tx - p.x) * 0.01;
+  p.vy += (ty - p.y) * 0.01;
+}
+else if (mode === "DISPERSE") {
+  p.vx += (Math.random() - 0.5) * 0.5;
+  p.vy += (Math.random() - 0.5) * 0.5;
+}
 else {
   const dx = center.x - p.x;
   const dy = center.y - p.y;
@@ -64,10 +75,13 @@ else {
   if (dist > 140) {
     p.vx += dx * 0.00002;
     p.vy += dy * 0.00002;
-  
+  }
 }
-    p.x += p.vx;
-    p.y += p.vy;
+
+/* 🔑 გადაადგილება — ყველა რეჟიმში */
+p.x += p.vx;
+p.y += p.vy;
+
 
     // კედლებზე შეჯახება
     if (p.x < 0 || p.x > canvas.width) p.vx *= -0.5;
