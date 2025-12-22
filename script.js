@@ -18,7 +18,7 @@ function resize() {
   canvas.height = window.innerHeight;
   center.x = canvas.width / 2;
   center.y = canvas.height / 2;
-  textPoints = generateTextPoints("MuYuDo");
+  textPoints = generateTextPoints("AI");
 }
 window.addEventListener("resize", resize);
 
