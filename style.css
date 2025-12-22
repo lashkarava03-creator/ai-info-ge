@@ -2,19 +2,36 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
 }
 
+body {
+  background: black;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* CANVAS – ყველაზე მნიშვნელოვანია */
+#neural-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* HERO */
 .hero {
   position: relative;
-  z-index: 2;
   height: 100vh;
   background-image: url("ai.jpg");
   background-size: cover;
   background-position: center;
-  overflow: hidden;
+  z-index: 2;
 }
 
+/* შავი ფენა ფოტოზე */
 .overlay {
   position: absolute;
   inset: 0;
@@ -22,6 +39,7 @@
   z-index: 1;
 }
 
+/* ტექსტი */
 .content {
   position: relative;
   z-index: 2;
@@ -34,7 +52,6 @@
   text-align: center;
 }
 
-
 .content h1 {
   font-size: 56px;
   margin-bottom: 10px;
@@ -44,16 +61,5 @@
   font-size: 20px;
   opacity: 0.85;
 }
-
-#neural-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  pointer-events: none;
-}
-
 
 
