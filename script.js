@@ -1,3 +1,7 @@
+console.log("JS loaded");
+document.body.style.background = "black";
+
+
 const canvas = document.getElementById("neural-canvas");
 const ctx = canvas.getContext("2d");
 
