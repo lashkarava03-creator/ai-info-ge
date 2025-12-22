@@ -30,8 +30,8 @@ function generateTextPoints(text) {
   const imageData = tctx.getImageData(0, 0, canvas.width, canvas.height);
   const points = [];
 
-  for (let y = 0; y < canvas.height; y += 4) {
-  for (let x = 0; x < canvas.width; x += 4) {
+  for (let y = 0; y < canvas.height; y += 8) {
+  for (let x = 0; x < canvas.width; x += 8) {
       const index = (y * canvas.width + x) * 4;
       if (imageData.data[index + 3] > 128) {
         points.push({ x, y });
@@ -58,7 +58,7 @@ resize();
 
 // ნაწილაკები
 const particles = [];
-const particleCount = textPoints.length;
+const particleCount = Math.min(700, textPoints.length);
 
 
 for (let i = 0; i < particleCount; i++) {
@@ -109,10 +109,12 @@ function animate() {
     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
     ctx.fillStyle = "rgba(0, 255, 255, 1)";
     ctx.shadowColor = "rgba(0, 255, 255, 0.9)";
-    ctx.shadowBlur = 12;
+    ctx.shadowBlur = 4;
+
     ctx.fill();
 
-    for (let j = i + 1; j < particles.length; j++) {
+    for (let j = i + 1; j < Math.min(i + 25, particles.length); j++) {
+
       const p2 = particles[j];
       const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
 
