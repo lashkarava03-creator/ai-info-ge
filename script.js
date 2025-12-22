@@ -44,43 +44,39 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   particles.forEach((p, i) => {
-  
-  // --- მოძრაობის ლოგიკა ---
-if (mode === "FORM_TEXT" && textPoints[i]) {
-  const tx = textPoints[i].x;
-  const ty = textPoints[i].y;
 
-  p.vx += (tx - p.x) * 0.01;
-  p.vy += (ty - p.y) * 0.01;
-}
-else if (mode === "DISPERSE") {
-  p.vx += (Math.random() - 0.5) * 0.5;
-  p.vy += (Math.random() - 0.5) * 0.5;
-}
-else {
-  const dx = center.x - p.x;
-  const dy = center.y - p.y;
-  const dist = Math.hypot(dx, dy);
+    // --- მოძრაობის ლოგიკა ---
+    if (mode === "FORM_TEXT" && textPoints[i]) {
+      const tx = textPoints[i].x;
+      const ty = textPoints[i].y;
 
-  if (dist > 140) {
-    p.vx += dx * 0.00002;
-    p.vy += dy * 0.00002;
-  }
-}
+      p.vx += (tx - p.x) * 0.01;
+      p.vy += (ty - p.y) * 0.01;
+    }
+    else if (mode === "DISPERSE") {
+      p.vx += (Math.random() - 0.5) * 0.5;
+      p.vy += (Math.random() - 0.5) * 0.5;
+    }
+    else {
+      const dx = center.x - p.x;
+      const dy = center.y - p.y;
+      const dist = Math.hypot(dx, dy);
 
-// --- გადაადგილება ყველა რეჟიმში ---
-p.x += p.vx;
-p.y += p.vy;
-;
-  }
-}
+      if (dist > 140) {
+        p.vx += dx * 0.00002;
+        p.vy += dy * 0.00002;
+      }
+    }
 
+    // --- გადაადგილება (ერთხელ!) ---
+    p.x += p.vx;
+    p.y += p.vy;
 
-    // კედლებზე შეჯახება
+    // --- კედლებზე შეჯახება ---
     if (p.x < 0 || p.x > canvas.width) p.vx *= -0.5;
     if (p.y < 0 || p.y > canvas.height) p.vy *= -0.5;
 
-    // წერტილი
+    // --- წერტილი ---
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
     ctx.fillStyle = "rgba(0, 255, 255, 1)";
@@ -88,7 +84,7 @@ p.y += p.vy;
     ctx.shadowBlur = 12;
     ctx.fill();
 
-    // ნეირონული ხაზები
+    // --- ნეირონული ხაზები ---
     for (let j = i + 1; j < particles.length; j++) {
       const p2 = particles[j];
       const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
@@ -102,18 +98,23 @@ p.y += p.vy;
         ctx.stroke();
       }
     }
-  });
-timer++;
 
-if (timer === 300) mode = "FORM_TEXT";
-if (timer === 600) mode = "DISPERSE";
-if (timer === 900) {
-  mode = "FLOW";
-  timer = 0;
-}
+  });
+
+  // --- ტაიმერი და რეჟიმები ---
+  timer++;
+
+  if (timer === 300) mode = "FORM_TEXT";
+  if (timer === 600) mode = "DISPERSE";
+  if (timer === 900) {
+    mode = "FLOW";
+    timer = 0;
+  }
 
   requestAnimationFrame(animate);
 }
+
+
 function generateTextPoints(text) {
   const tempCanvas = document.createElement("canvas");
   const tctx = tempCanvas.getContext("2d");
