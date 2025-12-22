@@ -22,15 +22,16 @@ function generateTextPoints(text) {
   tctx.fillStyle = "white";
   tctx.textAlign = "center";
   tctx.textBaseline = "middle";
-  tctx.font = "bold 120px Arial";
+  tctx.font = "bold 160px Arial";
+
 
   tctx.fillText(text, canvas.width / 2, canvas.height / 2);
 
   const imageData = tctx.getImageData(0, 0, canvas.width, canvas.height);
   const points = [];
 
-  for (let y = 0; y < canvas.height; y += 6) {
-    for (let x = 0; x < canvas.width; x += 6) {
+  for (let y = 0; y < canvas.height; y += 4) {
+  for (let x = 0; x < canvas.width; x += 4) {
       const index = (y * canvas.width + x) * 4;
       if (imageData.data[index + 3] > 128) {
         points.push({ x, y });
@@ -49,7 +50,7 @@ function resize() {
   center.x = canvas.width / 2;
   center.y = canvas.height / 2;
 
-  textPoints = generateTextPoints("MuYuDo");
+  textPoints = generateTextPoints("AI");
 }
 
 window.addEventListener("resize", resize);
@@ -57,7 +58,8 @@ resize();
 
 // ნაწილაკები
 const particles = [];
-const particleCount = 120;
+const particleCount = textPoints.length;
+
 
 for (let i = 0; i < particleCount; i++) {
   particles.push({
