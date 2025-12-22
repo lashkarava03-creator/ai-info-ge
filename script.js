@@ -1,18 +1,7 @@
 const canvas = document.getElementById("neural-canvas");
 const ctx = canvas.getContext("2d");
 
-// ===== CONFIG =====
-const PARTICLE_COUNT = 320;
-const CENTER_RADIUS = 160;
-const FRICTION = 0.82;
-const MAX_SPEED = 4;
-
-// რეჟიმები
-let mode = "FLOW"; // FLOW | FORM_TEXT | HOLD | DISPERSE
-let timer = 0;
-let textPoints = [];
-
-// ===== RESIZE =====
+// ზომის მორგება
 function resize() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -22,102 +11,91 @@ function resize() {
 }
 window.addEventListener("resize", resize);
 
-// ===== CENTER =====
-const center = {
-  x: window.innerWidth / 2,
-  y: window.innerHeight / 2
-};
+// ცენტრი
+const center = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+resize();
 
-// ===== PARTICLES =====
+// ნაწილაკები
 const particles = [];
+const particleCount = 140;
+let mode = "FLOW"; // FLOW | TEXT | DISPERSE
+let textPoints = [];
+let timer = 0;
 
-for (let i = 0; i < PARTICLE_COUNT; i++) {
+for (let i = 0; i < particleCount; i++) {
   particles.push({
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
-    vx: (Math.random() - 0.5) * 1,
-    vy: (Math.random() - 0.5) * 1,
-    r: Math.random() * 2 + 1
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
+    radius: 2
   });
 }
 
-resize();
-
-// ===== ANIMATION =====
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   particles.forEach((p, i) => {
-
-    if (mode === "FORM_TEXT" && textPoints[i]) {
-      const tx = textPoints[i].x;
-      const ty = textPoints[i].y;
-      p.vx += (tx - p.x) * 0.08;
-      p.vy += (ty - p.y) * 0.08;
-    }
-
-    else if (mode === "HOLD") {
-      p.vx *= 0.7;
-      p.vy *= 0.7;
-    }
-
+    if (mode === "TEXT" && textPoints[i]) {
+      // ტექსტში რბილი მისვლა (დამშვიდებული)
+      p.vx = (textPoints[i].x - p.x) * 0.05;
+      p.vy = (textPoints[i].y - p.y) * 0.05;
+    } 
     else if (mode === "DISPERSE") {
-      p.vx += (Math.random() - 0.5) * 0.6;
-      p.vy += (Math.random() - 0.5) * 0.6;
-    }
-
+      p.vx += (Math.random() - 0.5) * 0.2;
+      p.vy += (Math.random() - 0.5) * 0.2;
+    } 
     else {
+      // FLOW
       const dx = center.x - p.x;
       const dy = center.y - p.y;
       const dist = Math.hypot(dx, dy);
-      if (dist > CENTER_RADIUS) {
-        p.vx += dx * 0.00002;
-        p.vy += dy * 0.00002;
+      if (dist > 180) {
+        p.vx += dx * 0.00003;
+        p.vy += dy * 0.00003;
       }
     }
 
-    // MOVE
     p.x += p.vx;
     p.y += p.vy;
 
-    // FRICTION + LIMIT
-    p.vx *= FRICTION;
-    p.vy *= FRICTION;
-    p.vx = Math.max(-MAX_SPEED, Math.min(MAX_SPEED, p.vx));
-    p.vy = Math.max(-MAX_SPEED, Math.min(MAX_SPEED, p.vy));
+    // კედლები
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -0.6;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -0.6;
 
-    // DRAW PARTICLE
+    // წერტილი
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
     ctx.fillStyle = "rgba(0,255,255,1)";
-    ctx.shadowColor = "rgba(0,255,255,0.9)";
-    ctx.shadowBlur = 12;
+    ctx.shadowColor = "rgba(0,255,255,0.8)";
+    ctx.shadowBlur = 10;
     ctx.fill();
+  });
 
-    // LINES only in FLOW
-    if (mode === "FLOW") {
+  // ხაზები მხოლოდ FLOW რეჟიმში
+  if (mode === "FLOW") {
+    for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
+        const p1 = particles[i];
         const p2 = particles[j];
-        const d = Math.hypot(p.x - p2.x, p.y - p2.y);
-        if (d < 110) {
+        const d = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+        if (d < 120) {
           ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
+          ctx.moveTo(p1.x, p1.y);
           ctx.lineTo(p2.x, p2.y);
-          ctx.strokeStyle = `rgba(0,255,255,${1 - d / 110})`;
+          ctx.strokeStyle = `rgba(0,255,255,${1 - d / 120})`;
           ctx.lineWidth = 0.4;
           ctx.stroke();
         }
       }
     }
-  });
+  }
 
-  // ===== TIMELINE =====
+  // რეჟიმების ცვლა
   timer++;
-
-  if (timer === 200) mode = "FORM_TEXT";
-  if (timer === 360) mode = "HOLD";
-  if (timer === 480) mode = "DISPERSE";
-  if (timer === 680) {
+  if (timer === 240) mode = "TEXT";
+  if (timer === 420) mode = "DISPERSE";
+  if (timer === 620) {
     mode = "FLOW";
     timer = 0;
   }
@@ -125,7 +103,7 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-// ===== TEXT POINTS =====
+// ტექსტის წერტილები
 function generateTextPoints(text) {
   const temp = document.createElement("canvas");
   const tctx = temp.getContext("2d");
@@ -137,23 +115,21 @@ function generateTextPoints(text) {
   tctx.textAlign = "center";
   tctx.textBaseline = "middle";
   tctx.font = "bold 140px Arial";
-
   tctx.fillText(text, canvas.width / 2, canvas.height / 2);
 
-  const img = tctx.getImageData(0, 0, canvas.width, canvas.height).data;
-  const pts = [];
+  const img = tctx.getImageData(0, 0, canvas.width, canvas.height);
+  const points = [];
 
-  for (let y = 0; y < canvas.height; y += 5) {
-    for (let x = 0; x < canvas.width; x += 5) {
+  for (let y = 0; y < canvas.height; y += 7) {
+    for (let x = 0; x < canvas.width; x += 7) {
       const i = (y * canvas.width + x) * 4;
-      if (img[i + 3] > 150) pts.push({ x, y });
+      if (img.data[i + 3] > 150) points.push({ x, y });
     }
   }
-
-  return pts.slice(0, PARTICLE_COUNT);
+  return points;
 }
 
-// START
 animate();
+
 
 
