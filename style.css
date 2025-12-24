@@ -55,14 +55,17 @@ html, body {
 
 /* CONTENT — ტექსტი */
 .content {
-  position: relative;
+  position: absolute;
+  left: 50%;
+  top: 65%;
+  transform: translate(-50%, -50%);
   z-index: 5;
   color: white;
   text-align: center;
-  top: 58%;
-  transform: translateY(-50%);
-  padding: 0 16px;
+  width: 100%;
+  pointer-events: none;
 }
+
 
 .content h1 {
   font-size: 42px;
