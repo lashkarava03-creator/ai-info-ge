@@ -99,5 +99,75 @@ html, body {
   color: #00ffff;
   font-weight: 500;
 }
+.stones {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 260px;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.stone {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 3s infinite ease-in-out;
+}
+
+.stone span {
+  position: absolute;
+  top: 60px;
+  font-size: 13px;
+  white-space: nowrap;
+  color: #e8ffff;
+  opacity: 0.85;
+}
+.stone-blue {
+  color: #00ffff;
+  background: #00ffff;
+  left: 50%;
+  top: 0;
+}
+
+.stone-purple {
+  color: #9b6cff;
+  background: #9b6cff;
+  left: 10%;
+  top: 80px;
+}
+
+.stone-green {
+  color: #00ff9c;
+  background: #00ff9c;
+  right: 10%;
+  top: 80px;
+}
+
+.stone-orange {
+  color: #ff9f43;
+  background: #ff9f43;
+  left: 25%;
+  top: 160px;
+}
+
+.stone-red {
+  color: #ff4d4d;
+  background: #ff4d4d;
+  right: 25%;
+  top: 160px;
+}
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.9; }
+}
 
 
