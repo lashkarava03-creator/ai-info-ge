@@ -44,7 +44,7 @@ function generateTextPoints(text) {
   tctx.textAlign = "center";
   tctx.textBaseline = "middle";
   tctx.font = "bold 160px Arial";
-  tctx.fillText(text, canvas.width / 2, canvas.height / 2);
+  tctx.fillText(text, canvas.width / 2, canvas.height / 2 - 30 );
 
   const data = tctx.getImageData(0, 0, canvas.width, canvas.height).data;
   const points = [];
