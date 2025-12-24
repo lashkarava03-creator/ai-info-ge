@@ -9,7 +9,7 @@ html, body {
 .hero {
   position: fixed;
   inset: 0;
-  background-image: url("ai.jpg");
+  background-image: url("ai.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
