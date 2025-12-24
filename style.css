@@ -124,6 +124,9 @@ html, body {
   justify-content: center;
   animation: pulse 3s infinite ease-in-out;
 }
+.stone {
+  backdrop-filter: blur(2px);
+}
 
 .stone span {
   position: absolute;
