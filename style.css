@@ -51,6 +51,23 @@ html, body {
   opacity: 0.85;
   text-shadow: 0 0 10px rgba(0,255,255,0.35);
 }
-
+.warning {
+  margin-top: 18px;
+  padding: 10px 14px;
+  display: inline-block;
+  border-left: 3px solid #00ffff;
+  background: rgba(0, 255, 255, 0.08);
+  font-size: 14px;
+  opacity: 0.9;
+  letter-spacing: 0.3px;
+  text-align: left;
+  max-width: 520px;
 }
+
+.warning strong {
+  color: #00ffff;
+  font-weight: 500;
+}
+
+
 
