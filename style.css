@@ -176,4 +176,8 @@ html, body {
   100% { transform: scale(1); opacity: 0.9; }
 }
 
+/* ===== ცენტრალური ქვა (AI ბირთვი) ===== */
+.stone-center {
+  transform: translateY(-12px); /* ← აქ ცვლი სიმაღლეს */
+}
 
