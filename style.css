@@ -43,8 +43,8 @@ html, body {
 /* THANOS HAND */
 .thanos-hand {
   position: absolute;
-  top: 4%;              /* AI წარწერის ზემოთ */
-  left: 50%;
+  top: 12%;              /* AI წარწერის ზემოთ */
+  left: 60%;
   transform: translateX(-50%);
   width: 170px;
   max-width: 45vw;
