@@ -31,8 +31,23 @@ html, body {
   inset: 0;
   z-index: 2;
   pointer-events: none;
+  
 }
 
+.thanos-hand {
+  position: absolute;
+  top: 12%;              /* AI წარწერის ზემოთ */
+  left: 50%;
+  transform: translateX(-50%);
+  
+  width: 260px;          /* ზომა */
+  max-width: 60vw;
+
+  z-index: 4;            /* ტექსტზე ზემოთ, canvas-ზე ქვემოთ */
+  pointer-events: none; /* არ დააჭირო */
+  
+  filter: drop-shadow(0 0 25px rgba(0, 255, 255, 0.35));
+}
 /* ტექსტი */
 .content {
   position: relative;
@@ -67,20 +82,6 @@ html, body {
 .warning strong {
   color: #00ffff;
   font-weight: 500;
-}
-.thanos-hand {
-  position: absolute;
-  top: 12%;              /* AI წარწერის ზემოთ */
-  left: 50%;
-  transform: translateX(-50%);
-  
-  width: 260px;          /* ზომა */
-  max-width: 60vw;
-
-  z-index: 4;            /* ტექსტზე ზემოთ, canvas-ზე ქვემოთ */
-  pointer-events: none; /* არ დააჭირო */
-  
-  filter: drop-shadow(0 0 25px rgba(0, 255, 255, 0.35));
 }
 
 
