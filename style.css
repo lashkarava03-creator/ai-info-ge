@@ -31,6 +31,12 @@ html, body {
   background: rgba(0, 0, 0, 0.55);
   z-index: 2;
 }
+.warning {
+  position: relative;
+  z-index: 5;   /* ხელთათმანზე და canvas-ზე ზემოთ */
+}
+
+
 
 /* CANVAS — წერტილები */
 #neural-canvas {
