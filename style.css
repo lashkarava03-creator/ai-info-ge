@@ -68,6 +68,16 @@ html, body {
   color: #00ffff;
   font-weight: 500;
 }
+.thanos-glove {
+  position: fixed;
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  z-index: 3;
+  opacity: 0.9;
+  pointer-events: none;
+}
 
 
 
