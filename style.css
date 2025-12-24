@@ -104,7 +104,7 @@ html, body {
 }
 .stones {
   position: absolute;
-  top: 22%;
+  top: 14%;
   left: 50%;
   transform: translateX(-50%);
   width: 600px;
