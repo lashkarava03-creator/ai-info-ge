@@ -1,33 +1,36 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 html, body {
   width: 100%;
   height: 100%;
-  background: black;
   overflow: hidden;
+  font-family: Arial, sans-serif;
 }
 
-/* CANVAS */
+/* HERO — ფონზე ფოტო */
+.hero {
+  position: fixed;
+  inset: 0;
+  background-image: url("ai.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* მუქი overlay რომ წერტილები გამოიკვეთოს */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+}
+
+/* CANVAS — წერტილები */
 #neural-canvas {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* HERO */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;
+  inset: 0;
   z-index: 2;
+  pointer-events: none;
 }
 
 /* ტექსტი */
@@ -42,5 +45,6 @@ html, body {
 
 .content h1 {
   font-size: 56px;
+  text-shadow: 0 0 15px rgba(0,255,255,0.6);
 }
 
