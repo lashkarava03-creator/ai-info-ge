@@ -68,16 +68,21 @@ html, body {
   color: #00ffff;
   font-weight: 500;
 }
-.thanos-glove {
-  position: fixed;
-  top: 22%;
+.thanos-hand {
+  position: absolute;
+  top: 12%;              /* AI წარწერის ზემოთ */
   left: 50%;
   transform: translateX(-50%);
-  width: 180px;
-  z-index: 3;
-  opacity: 0.9;
-  pointer-events: none;
+  
+  width: 260px;          /* ზომა */
+  max-width: 60vw;
+
+  z-index: 4;            /* ტექსტზე ზემოთ, canvas-ზე ქვემოთ */
+  pointer-events: none; /* არ დააჭირო */
+  
+  filter: drop-shadow(0 0 25px rgba(0, 255, 255, 0.35));
 }
+
 
 
 
