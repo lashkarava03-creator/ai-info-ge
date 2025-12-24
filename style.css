@@ -39,9 +39,10 @@ html, body {
   z-index: 3;
   color: white;
   text-align: center;
-  top: 50%;
+  top: 56%;
   transform: translateY(-50%);
 }
+
 
 .content h1 {
   font-size: 56px;
