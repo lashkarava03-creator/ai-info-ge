@@ -68,8 +68,8 @@ function animate() {
 
   particles.forEach(p => {
     if (mode === "TEXT" && p.target) {
-      p.vx += (p.target.x - p.x) * 0.02;
-      p.vy += (p.target.y - p.y) * 0.02;
+      p.vx += (p.target.x - p.x) * 0.004;
+      p.vy += (p.target.y - p.y) * 0.004;
     } else {
       p.vx += (Math.random() - 0.5) * 0.02;
       p.vy += (Math.random() - 0.5) * 0.02;
@@ -77,6 +77,9 @@ function animate() {
 
     p.x += p.vx;
     p.y += p.vy;
+    
+    p.vx *= 0.85;
+    p.vy *= 0.85;
 
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
