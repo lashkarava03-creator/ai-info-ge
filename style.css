@@ -11,92 +11,57 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
+/* ფონზე ფოტო */
 .hero {
   position: fixed;
   inset: 0;
-  background-image: url("ai.png");
+  background-image: url("ai.png"); /* შენი ფონი */
   background-size: cover;
   background-position: center;
   z-index: 1;
 }
 
+/* მუქი overlay */
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
 }
 
+/* Canvas — წერტილები */
 #neural-canvas {
   position: fixed;
   inset: 0;
   z-index: 2;
-}
-
-.ai-text {
-  position: absolute;
-  top: 32%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 110px;
-  font-weight: bold;
-  color: #00ffff;
-  text-shadow: 0 0 25px rgba(0,255,255,0.6);
-  z-index: 3;
-}
-
-.thanos-hand {
-  position: absolute;
-  top: 48%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  z-index: 4;
   pointer-events: none;
 }
 
-.stones {
-  position: absolute;
-  top: 28%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  z-index: 4;
-}
-
-.stone {
-  position: absolute;
-  font-size: 13px;
-  padding: 6px 10px;
-  border-radius: 14px;
-  color: #fff;
-  background: rgba(255,255,255,0.15);
-}
-
-.purple { left: 0; top: 40px; background: #9b59b6; }
-.orange { left: 140px; top: 100px; background: #e67e22; }
-.cyan   { left: 260px; top: 0; background: #00ffff; color:#000; }
-.green  { right: 140px; top: 100px; background: #2ecc71; }
-.red    { right: 0; top: 40px; background: #e74c3c; }
-
+/* ტექსტური კონტენტი */
 .content {
-  position: absolute;
-  top: 65%;
-  width: 100%;
-  text-align: center;
-  color: #fff;
+  position: relative;
   z-index: 3;
+  text-align: center;
+  color: white;
+  top: 60%;
+  transform: translateY(-50%);
+  padding: 0 20px;
 }
 
 .content h1 {
-  font-size: 42px;
-  margin-bottom: 14px;
+  font-size: 40px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  text-shadow: 0 0 12px rgba(0,255,255,0.35);
 }
 
 .subtitle {
-  max-width: 620px;
-  margin: 0 auto 18px;
+  font-size: 15px;
   opacity: 0.85;
+  max-width: 600px;
+  margin: 0 auto 18px;
+  line-height: 1.5;
 }
 
 .warning {
@@ -104,5 +69,12 @@ html, body {
   padding: 12px 16px;
   border-left: 3px solid #00ffff;
   background: rgba(0,255,255,0.08);
+  font-size: 14px;
+  opacity: 0.9;
+  max-width: 520px;
   text-align: left;
+}
+
+.warning strong {
+  color: #00ffff;
 }
