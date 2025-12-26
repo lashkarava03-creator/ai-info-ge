@@ -56,21 +56,29 @@ animate();
 /* ქვების ანიმაცია */
 const stones = document.querySelectorAll(".stone");
 
+function showStones() {
+  stones.forEach(s => {
+    s.style.opacity = "1";
+  });
+}
+
+function hideStones() {
+  stones.forEach(s => {
+    s.style.opacity = "0";
+    s.style.transform = "translate(-50%, -50%)";
+  });
+}
+
 function animateStones() {
-  stones[0].style.transform = "translate(-140px,-80px)";
-  stones[1].style.transform = "translate(-90px,-140px)";
-  stones[2].style.transform = "translate(140px,-80px)";
-  stones[3].style.transform = "translate(90px,-140px)";
-  stones[4].style.transform = "translate(0px,-170px)";
+  showStones();
 
-  stones.forEach(s => s.style.opacity = "1");
+  stones[0].style.transform = "translate(-120px, -80px)";
+  stones[1].style.transform = "translate(-70px, -140px)";
+  stones[2].style.transform = "translate(120px, -80px)";
+  stones[3].style.transform = "translate(70px, -140px)";
+  stones[4].style.transform = "translate(0px, -170px)";
 
-  setTimeout(()=>{
-    stones.forEach(s=>{
-      s.style.opacity="0";
-      s.style.transform="translate(-50%,-50%)";
-    });
-  },5000);
+  setTimeout(hideStones, 6000);
 }
 
 animateStones();
