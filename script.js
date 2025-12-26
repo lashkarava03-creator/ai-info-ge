@@ -49,8 +49,8 @@ function generateTextPoints(text) {
   const data = tctx.getImageData(0, 0, canvas.width, canvas.height).data;
   const points = [];
 
-  for (let y = 0; y < canvas.height; y += 6) {
-    for (let x = 0; x < canvas.width; x += 6) {
+  for (let y = 0; y < canvas.height; y += 4) {
+    for (let x = 0; x < canvas.width; x += 4) {
       const i = (y * canvas.width + x) * 4;
       if (data[i + 3] > 150) {
         points.push({ x, y });
