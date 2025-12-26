@@ -230,4 +230,11 @@ html, body {
     opacity: 0.75;
   }
 }
+.warning-near-gauntlet {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+}
 
