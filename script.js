@@ -6,7 +6,7 @@ let textPoints = [];
 let mode = "FLOW";
 let timer = 0;
 
-const PARTICLE_COUNT = 180;
+const PARTICLE_COUNT = 220;
 const center = { x: 0, y: 0 };
 
 function resize() {
@@ -26,19 +26,24 @@ particles = Array.from({ length: PARTICLE_COUNT }, () => ({
   y: Math.random() * canvas.height,
   vx: (Math.random() - 0.5) * 0.6,
   vy: (Math.random() - 0.5) * 0.6,
-  r: Math.random() * 2 + 1
+  r: Math.random() * 2 + 1,
+  target: null
 }));
+
+function assignTargets() {
+  particles.forEach(p => {
+    p.target = textPoints[Math.floor(Math.random() * textPoints.length)];
+  });
+}
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  particles.forEach((p, i) => {
-    if (mode === "TEXT" && textPoints[i]) {
-      p.vx += (textPoints[i].x - p.x) * 0.015;
-      p.vy += (textPoints[i].y - p.y) * 0.015;
-    }
-
-    if (mode === "FLOW") {
+  particles.forEach(p => {
+    if (mode === "TEXT" && p.target) {
+      p.vx += (p.target.x - p.x) * 0.02;
+      p.vy += (p.target.y - p.y) * 0.02;
+    } else {
       const dx = center.x - p.x;
       const dy = center.y - p.y;
       p.vx += dx * 0.00001;
@@ -58,9 +63,18 @@ function animate() {
 
   timer++;
 
-  if (timer === 200) mode = "TEXT";     // იკრიბება AI
-  if (timer === 520) mode = "FLOW";     // იშლება
-  if (timer > 750) timer = 0;
+  if (timer === 180) {
+    assignTargets();
+    mode = "TEXT";
+  }
+
+  if (timer === 520) {
+    mode = "FLOW";
+  }
+
+  if (timer > 800) {
+    timer = 0;
+  }
 
   requestAnimationFrame(animate);
 }
@@ -82,15 +96,17 @@ function generateTextPoints(text) {
   const imgData = tctx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
   const points = [];
 
-  for (let y = 0; y < tempCanvas.height; y += 6) {
-    for (let x = 0; x < tempCanvas.width; x += 6) {
+  for (let y = 0; y < tempCanvas.height; y += 5) {
+    for (let x = 0; x < tempCanvas.width; x += 5) {
       const index = (y * tempCanvas.width + x) * 4;
       if (imgData.data[index + 3] > 150) {
         points.push({ x, y });
       }
     }
   }
+
   return points;
 }
 
 animate();
+
