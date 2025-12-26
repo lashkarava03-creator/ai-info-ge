@@ -186,4 +186,48 @@ html, body {
 .stone-center {
   transform: translateY(-12px); /* ← აქ ცვლი სიმაღლეს */
 }
+/* 📱 MOBILE OPTIMIZATION */
+@media (max-width: 768px) {
+
+  /* ხელთათმანი */
+  .thanos-hand {
+    top: 6%;
+    width: 170px;
+  }
+
+  /* ფერადი ბურთულები */
+  .stone {
+    transform: scale(0.75);
+  }
+
+  /* მთავარი კონტენტი */
+  .content {
+    top: 62%;
+    padding: 0 16px;
+  }
+
+  /* სათაური */
+  .content h1 {
+    font-size: 26px;
+    line-height: 1.3;
+  }
+
+  /* ქვეტექსტი */
+  .content p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* გაფრთხილების ტექსტი */
+  .warning {
+    font-size: 13px;
+    max-width: 100%;
+    margin-top: 14px;
+  }
+
+  /* AI წერტილების ანიმაცია */
+  #neural-canvas {
+    opacity: 0.75;
+  }
+}
 
