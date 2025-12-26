@@ -1,85 +1,104 @@
 const canvas = document.getElementById("neural-canvas");
 const ctx = canvas.getContext("2d");
 
-// ეკრანის ზომის მორგება
 function resize() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-
-  center.x = canvas.width / 2;
-  center.y = canvas.height / 2;
 }
-
 window.addEventListener("resize", resize);
-
-// ცენტრი (ტვინის ადგილი)
-const center = {
-  x: window.innerWidth / 2,
-  y: window.innerHeight / 2
-};
-
 resize();
 
-// ნაწილაკები
-const particles = [];
-const particleCount = 120;
+// ===== SETTINGS =====
+const PARTICLE_COUNT = 220;
+const TEXT = "AI";
+const FORM_SPEED = 0.08;
+const FLOAT_SPEED = 0.4;
 
-for (let i = 0; i < particleCount; i++) {
+// ===== STATE =====
+let mode = "FLOAT"; // FLOAT | FORM | DISPERSE
+let timer = 0;
+let textPoints = [];
+
+// ===== PARTICLES =====
+const particles = [];
+
+for (let i = 0; i < PARTICLE_COUNT; i++) {
   particles.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 0.6,
-    vy: (Math.random() - 0.5) * 0.6,
-    radius: Math.random() * 2.5 + 1.5
+    vx: (Math.random() - 0.5) * FLOAT_SPEED,
+    vy: (Math.random() - 0.5) * FLOAT_SPEED,
+    r: 2
   });
 }
 
-// ანიმაცია
+// ===== TEXT POINTS =====
+function generateTextPoints(text) {
+  const temp = document.createElement("canvas");
+  const tctx = temp.getContext("2d");
+
+  temp.width = canvas.width;
+  temp.height = canvas.height;
+
+  tctx.fillStyle = "white";
+  tctx.textAlign = "center";
+  tctx.textBaseline = "middle";
+  tctx.font = "bold 160px Arial";
+  tctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+  const data = tctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  const points = [];
+
+  for (let y = 0; y < canvas.height; y += 6) {
+    for (let x = 0; x < canvas.width; x += 6) {
+      const i = (y * canvas.width + x) * 4;
+      if (data[i + 3] > 150) {
+        points.push({ x, y });
+      }
+    }
+  }
+  return points;
+}
+
+textPoints = generateTextPoints(TEXT);
+
+// ===== ANIMATION =====
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   particles.forEach((p, i) => {
-    // მიზიდვა ცენტრისკენ
-    const dx = center.x - p.x;
-    const dy = center.y - p.y;
+    if (mode === "FORM" && textPoints[i]) {
+      // --- FORM AI ---
+      p.x += (textPoints[i].x - p.x) * FORM_SPEED;
+      p.y += (textPoints[i].y - p.y) * FORM_SPEED;
+    } 
+    else {
+      // --- FLOAT / DISPERSE ---
+      p.x += p.vx;
+      p.y += p.vy;
 
-    p.vx += dx * 0.00002;
-    p.vy += dy * 0.00002;
-
-    p.x += p.vx;
-    p.y += p.vy;
-
-    // კედლებზე შეჯახება
-    if (p.x < 0 || p.x > canvas.width) p.vx *= -0.5;
-    if (p.y < 0 || p.y > canvas.height) p.vy *= -0.5;
-
-    // წერტილი
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(0, 255, 255, 1)";
-    ctx.shadowColor = "rgba(0, 255, 255, 0.9)";
-    ctx.shadowBlur = 12;
-    ctx.fill();
-
-    // ნეირონული ხაზები
-    for (let j = i + 1; j < particles.length; j++) {
-      const p2 = particles[j];
-      const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-
-      if (dist < 120) {
-        ctx.beginPath();
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.strokeStyle = `rgba(0, 255, 255, ${1 - dist / 120})`;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-      }
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
     }
+
+    // DRAW PARTICLE
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(0,255,255,1)";
+    ctx.shadowColor = "rgba(0,255,255,0.9)";
+    ctx.shadowBlur = 10;
+    ctx.fill();
   });
+
+  // ===== TIMELINE =====
+  timer++;
+
+  if (timer === 180) mode = "FORM";      // იკრიბება AI
+  if (timer === 420) mode = "DISPERSE";  // იფანტება
+  if (timer === 520) mode = "FLOAT";     // თავისუფალი მოძრაობა
+  if (timer > 700) timer = 0;
 
   requestAnimationFrame(animate);
 }
 
-// გაშვება
 animate();
-
