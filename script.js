@@ -1,108 +1,85 @@
 const canvas = document.getElementById("neural-canvas");
 const ctx = canvas.getContext("2d");
 
+// ეკრანის ზომის მორგება
 function resize() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-  textPoints = generateTextPoints("AI");
+
+  center.x = canvas.width / 2;
+  center.y = canvas.height / 2;
 }
+
 window.addEventListener("resize", resize);
+
+// ცენტრი (ტვინის ადგილი)
+const center = {
+  x: window.innerWidth / 2,
+  y: window.innerHeight / 2
+};
+
 resize();
 
-const dots = [];
-const DOT_COUNT = 180;
-let textPoints = [];
-let forming = false;
-let frame = 0;
+// ნაწილაკები
+const particles = [];
+const particleCount = 120;
 
-// --- წერტილების შექმნა ---
-for (let i = 0; i < DOT_COUNT; i++) {
-  dots.push({
+for (let i = 0; i < particleCount; i++) {
+  particles.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
     vx: (Math.random() - 0.5) * 0.6,
     vy: (Math.random() - 0.5) * 0.6,
-    target: null
+    radius: Math.random() * 2.5 + 1.5
   });
 }
 
-// --- ტექსტის წერტილებად გადაყვანა ---
-function generateTextPoints(text) {
-  const tCanvas = document.createElement("canvas");
-  const tctx = tCanvas.getContext("2d");
-
-  tCanvas.width = canvas.width;
-  tCanvas.height = canvas.height;
-
-  tctx.clearRect(0, 0, tCanvas.width, tCanvas.height);
-  tctx.fillStyle = "white";
-  tctx.font = "bold 110px Arial";
-  tctx.textAlign = "center";
-  tctx.textBaseline = "middle";
-
-  tctx.fillText(text, tCanvas.width / 2, tCanvas.height / 2 - 40);
-
-  const data = tctx.getImageData(0, 0, tCanvas.width, tCanvas.height).data;
-  const points = [];
-
-  for (let y = 0; y < tCanvas.height; y += 6) {
-    for (let x = 0; x < tCanvas.width; x += 6) {
-      const i = (y * tCanvas.width + x) * 4;
-      if (data[i + 3] > 150) {
-        points.push({ x, y });
-      }
-    }
-  }
-  return points;
-}
-
-// --- მიზნების მინიჭება ---
-function assignTargets() {
-  dots.forEach(dot => {
-    dot.target = textPoints[Math.floor(Math.random() * textPoints.length)];
-  });
-}
-
-// --- მთავარი ანიმაცია ---
+// ანიმაცია
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  dots.forEach(dot => {
+  particles.forEach((p, i) => {
+    // მიზიდვა ცენტრისკენ
+    const dx = center.x - p.x;
+    const dy = center.y - p.y;
 
-    if (forming && dot.target) {
-      // AI ფორმირება
-      dot.vx += (dot.target.x - dot.x) * 0.004;
-      dot.vy += (dot.target.y - dot.y) * 0.004;
-    } else {
-      // თავისუფალი მოძრაობა
-      dot.vx += (Math.random() - 0.5) * 0.02;
-      dot.vy += (Math.random() - 0.5) * 0.02;
-    }
+    p.vx += dx * 0.00002;
+    p.vy += dy * 0.00002;
 
-    // დამშვიდება
-    dot.vx *= 0.92;
-    dot.vy *= 0.92;
+    p.x += p.vx;
+    p.y += p.vy;
 
-    dot.x += dot.vx;
-    dot.y += dot.vy;
+    // კედლებზე შეჯახება
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -0.5;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -0.5;
 
+    // წერტილი
     ctx.beginPath();
-    ctx.arc(dot.x, dot.y, 1.6, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(0,255,255,0.9)";
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = "#00ffff";
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(0, 255, 255, 1)";
+    ctx.shadowColor = "rgba(0, 255, 255, 0.9)";
+    ctx.shadowBlur = 12;
     ctx.fill();
+
+    // ნეირონული ხაზები
+    for (let j = i + 1; j < particles.length; j++) {
+      const p2 = particles[j];
+      const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.strokeStyle = `rgba(0, 255, 255, ${1 - dist / 120})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
   });
-
-  frame++;
-
-  // ~3 წამში იწყებს AI-ს ფორმირებას
-  if (frame === 180) {
-    assignTargets();
-    forming = true;
-  }
 
   requestAnimationFrame(animate);
 }
 
+// გაშვება
 animate();
+
