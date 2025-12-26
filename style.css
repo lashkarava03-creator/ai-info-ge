@@ -1,240 +1,111 @@
-/* RESET */
-* {
+html, body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
   font-family: Arial, sans-serif;
+  background: black;
 }
 
-/* HERO — ფონზე ფოტო */
+/* ფონური ფოტო */
 .hero {
   position: fixed;
   inset: 0;
-  background-image: url("ai.png"); /* შენი ფონის ფოტო */
+  background-image: url("ai.png");
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
   z-index: 1;
 }
 
-/* მუქი overlay — კონტრასტისთვის */
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: 2;
-}
-.warning {
-  position: relative;
-  z-index: 5;   /* ხელთათმანზე და canvas-ზე ზემოთ */
+  background: rgba(0,0,0,0.55);
 }
 
-
-
-/* CANVAS — წერტილები */
+/* CANVAS */
 #neural-canvas {
   position: fixed;
   inset: 0;
-  z-index: 3;
+  z-index: 2;
   pointer-events: none;
 }
 
-/* THANOS HAND */
-.thanos-hand {
+/* AI ტექსტი */
+.ai-text {
   position: absolute;
-  top: 13%;              /* AI წარწერის ზემოთ */
+  top: 28%;
   left: 50%;
   transform: translateX(-50%);
-  width: 170px;
-  max-width: 45vw;
-  z-index: 4;
-  pointer-events: none;
-  filter: drop-shadow(0 0 25px rgba(0, 255, 255, 0.35));
+  font-size: 72px;
+  letter-spacing: 12px;
+  color: #00ffff;
+  text-shadow: 0 0 20px rgba(0,255,255,0.8);
+  z-index: 3;
 }
 
-/* CONTENT — ტექსტი */
+/* ტექსტი */
 .content {
   position: absolute;
+  top: 58%;
   left: 50%;
-  top: 65%;
   transform: translate(-50%, -50%);
-  z-index: 5;
-  color: white;
+  z-index: 3;
   text-align: center;
-  width: 100%;
-  pointer-events: none;
+  color: white;
+  max-width: 700px;
 }
 
-
 .content h1 {
-  font-size: 42px;
   font-weight: 300;
   letter-spacing: 2px;
-  opacity: 0.9;
-  text-shadow: 0 0 12px rgba(0, 255, 255, 0.4);
 }
 
 .content p {
-  margin-top: 12px;
-  font-size: 16px;
-  opacity: 0.8;
-  max-width: 560px;
-  margin-left: auto;
-  margin-right: auto;
+  opacity: 0.9;
+  font-size: 15px;
 }
 
-/* WARNING BLOCK */
+/* გაფრთხილება */
 .warning {
   margin-top: 18px;
   padding: 10px 14px;
   display: inline-block;
   border-left: 3px solid #00ffff;
-  background: rgba(0, 255, 255, 0.08);
+  background: rgba(0,255,255,0.08);
   font-size: 14px;
-  opacity: 0.9;
-  letter-spacing: 0.3px;
-  text-align: left;
-  max-width: 520px;
 }
 
-.warning strong {
-  color: #00ffff;
-  font-weight: 500;
-}
-.stones {
+/* თანოსის ხელი */
+.thanos-hand {
   position: absolute;
-  top: 14%;
+  top: 68%;
   left: 50%;
   transform: translateX(-50%);
-  width: 600px;
-  height: 260px;
+  width: 170px;
   z-index: 4;
   pointer-events: none;
 }
 
+/* ქვები */
 .stone {
   position: absolute;
-  width: 46px;
-  height: 46px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  box-shadow: 0 0 20px currentColor;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: pulse 3s infinite ease-in-out;
-}
-.stone {
-  backdrop-filter: blur(2px);
-}
-
-.stone span {
-  position: absolute;
-  top: 60px;
-  font-size: 13px;
-  white-space: nowrap;
-  color: #e8ffff;
-  opacity: 0.85;
-}
-.stone-blue {
-  color: #00ffff;
-  background: #00ffff;
+  top: 68%;
   left: 50%;
-  top: 0px;
-}
-
-.stone-purple {
-  color: #9b6cff;
-  background: #9b6cff;
-  left: 10%;
-  top: 80px;
-}
-
-.stone-green {
-  color: #00ff9c;
-  background: #00ff9c;
-  right: 10%;
-  top: 80px;
-}
-
-.stone-orange {
-  color: #ff9f43;
-  background: #ff9f43;
-  left: 25%;
-  top: 160px;
-}
-
-.stone-red {
-  color: #ff4d4d;
-  background: #ff4d4d;
-  right: 25%;
-  top: 160px;
-}
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 0.9; }
-  50% { transform: scale(1.15); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.9; }
-}
-
-/* ===== ცენტრალური ქვა (AI ბირთვი) ===== */
-.stone-center {
-  transform: translateY(-12px); /* ← აქ ცვლი სიმაღლეს */
-}
-/* 📱 MOBILE OPTIMIZATION */
-@media (max-width: 768px) {
-
-  /* ხელთათმანი */
-  .thanos-hand {
-    top: 6%;
-    width: 170px;
-  }
-
-  /* ფერადი ბურთულები */
-  .stone {
-    transform: scale(0.75);
-  }
-
-  /* მთავარი კონტენტი */
-  .content {
-    top: 62%;
-    padding: 0 16px;
-  }
-
-  /* სათაური */
-  .content h1 {
-    font-size: 26px;
-    line-height: 1.3;
-  }
-
-  /* ქვეტექსტი */
-  .content p {
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  /* გაფრთხილების ტექსტი */
-  .warning {
-    font-size: 13px;
-    max-width: 100%;
-    margin-top: 14px;
-  }
-
-  /* AI წერტილების ანიმაცია */
-  #neural-canvas {
-    opacity: 0.75;
-  }
-}
-.warning-near-gauntlet {
-  position: absolute;
-  top: 48%;
-  left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 1.8s ease;
   z-index: 5;
 }
+
+.stone-blue   { background:#00ffff; box-shadow:0 0 12px #00ffff; }
+.stone-purple{ background:#9b59ff; box-shadow:0 0 12px #9b59ff; }
+.stone-green { background:#2ecc71; box-shadow:0 0 12px #2ecc71; }
+.stone-orange{ background:#f39c12; box-shadow:0 0 12px #f39c12; }
+.stone-red   { background:#ff4d4d; box-shadow:0 0 12px #ff4d4d; }
 
