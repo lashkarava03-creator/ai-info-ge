@@ -1,14 +1,16 @@
-html, body {
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
   font-family: Arial, sans-serif;
-  background: black;
 }
 
-/* ფონური ფოტო */
 .hero {
   position: fixed;
   inset: 0;
@@ -25,87 +27,82 @@ html, body {
   background: rgba(0,0,0,0.55);
 }
 
-/* CANVAS */
 #neural-canvas {
   position: fixed;
   inset: 0;
   z-index: 2;
-  pointer-events: none;
 }
 
-/* AI ტექსტი */
 .ai-text {
   position: absolute;
-  top: 28%;
+  top: 32%;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 72px;
-  letter-spacing: 12px;
+  font-size: 110px;
+  font-weight: bold;
   color: #00ffff;
-  text-shadow: 0 0 20px rgba(0,255,255,0.8);
+  text-shadow: 0 0 25px rgba(0,255,255,0.6);
   z-index: 3;
 }
 
-/* ტექსტი */
-.content {
-  position: absolute;
-  top: 58%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-  text-align: center;
-  color: white;
-  max-width: 700px;
-}
-
-.content h1 {
-  font-weight: 300;
-  letter-spacing: 2px;
-}
-
-.content p {
-  opacity: 0.9;
-  font-size: 15px;
-}
-
-/* გაფრთხილება */
-.warning {
-  margin-top: 18px;
-  padding: 10px 14px;
-  display: inline-block;
-  border-left: 3px solid #00ffff;
-  background: rgba(0,255,255,0.08);
-  font-size: 14px;
-}
-
-/* თანოსის ხელი */
 .thanos-hand {
   position: absolute;
-  top: 68%;
+  top: 48%;
   left: 50%;
   transform: translateX(-50%);
-  width: 170px;
+  width: 200px;
   z-index: 4;
   pointer-events: none;
 }
 
-/* ქვები */
-.stone {
+.stones {
   position: absolute;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  top: 68%;
+  top: 28%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: all 1.8s ease;
-  z-index: 5;
+  transform: translateX(-50%);
+  width: 600px;
+  z-index: 4;
 }
 
-.stone-blue   { background:#00ffff; box-shadow:0 0 12px #00ffff; }
-.stone-purple{ background:#9b59ff; box-shadow:0 0 12px #9b59ff; }
-.stone-green { background:#2ecc71; box-shadow:0 0 12px #2ecc71; }
-.stone-orange{ background:#f39c12; box-shadow:0 0 12px #f39c12; }
-.stone-red   { background:#ff4d4d; box-shadow:0 0 12px #ff4d4d; }
+.stone {
+  position: absolute;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+}
 
+.purple { left: 0; top: 40px; background: #9b59b6; }
+.orange { left: 140px; top: 100px; background: #e67e22; }
+.cyan   { left: 260px; top: 0; background: #00ffff; color:#000; }
+.green  { right: 140px; top: 100px; background: #2ecc71; }
+.red    { right: 0; top: 40px; background: #e74c3c; }
+
+.content {
+  position: absolute;
+  top: 65%;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  z-index: 3;
+}
+
+.content h1 {
+  font-size: 42px;
+  margin-bottom: 14px;
+}
+
+.subtitle {
+  max-width: 620px;
+  margin: 0 auto 18px;
+  opacity: 0.85;
+}
+
+.warning {
+  display: inline-block;
+  padding: 12px 16px;
+  border-left: 3px solid #00ffff;
+  background: rgba(0,255,255,0.08);
+  text-align: left;
+}
