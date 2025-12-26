@@ -35,17 +35,20 @@ function generateTextPoints() {
 
   // ⚠️ ძალიან მნიშვნელოვანია
   tctx.fillStyle = "white";
-  tctx.font = "bold 160px sans-serif";
+  tctx.font = "bold 120px Arial";
   tctx.textAlign = "center";
   tctx.textBaseline = "middle";
-
-  tctx.fillText("AI", temp.width / 2, temp.height / 2);
+  tctx.shadowColor = "rgba(0, 255, 255, 0.9)";
+  tctx.shadowBlur = 20;
+ 
+tctx.fillText("AI", canvas.width / 2, canvas.height / 2);
 
   const img = tctx.getImageData(0, 0, temp.width, temp.height).data;
   textPoints = [];
 
-  for (let y = 0; y < temp.height; y += 4) {
-    for (let x = 0; x < temp.width; x += 4) {
+ for (let y = 0; y < canvas.height; y += 5) {
+  for (let x = 0; x < canvas.width; x += 5) {
+
       const index = (y * temp.width + x) * 4 + 3;
       if (img[index] > 150) {
         textPoints.push({ x, y });
@@ -82,7 +85,7 @@ function animate() {
     p.vy *= 0.85;
 
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.arc(p.x, p.y, p.radius * 1.1, 0, Math.PI * 2);
     ctx.fillStyle = "#00ffff";
     ctx.fill();
   });
