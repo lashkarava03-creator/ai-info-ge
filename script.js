@@ -1,34 +1,61 @@
 const canvas = document.getElementById("neural-canvas");
 const ctx = canvas.getContext("2d");
 
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
 let particles = [];
 let textPoints = [];
-let mode = "FLOW";
-let timer = 0;
+let mode = "FLOAT";
 
-const PARTICLE_COUNT = 220;
-const center = { x: 0, y: 0 };
+const PARTICLE_COUNT = 300;
 
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  center.x = canvas.width / 2;
-  center.y = canvas.height / 2;
-  textPoints = generateTextPoints("AI");
+function createParticles() {
+  particles = [];
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: 0,
+      vy: 0,
+      size: 2,
+      target: null
+    });
+  }
 }
 
-window.addEventListener("resize", resize);
-resize();
+function generateTextPoints() {
+  const temp = document.createElement("canvas");
+  const tctx = temp.getContext("2d");
 
-// ნაწილაკები
-particles = Array.from({ length: PARTICLE_COUNT }, () => ({
-  x: Math.random() * canvas.width,
-  y: Math.random() * canvas.height,
-  vx: (Math.random() - 0.5) * 0.6,
-  vy: (Math.random() - 0.5) * 0.6,
-  r: Math.random() * 2 + 1,
-  target: null
-}));
+  temp.width = canvas.width;
+  temp.height = canvas.height;
+
+  tctx.clearRect(0, 0, temp.width, temp.height);
+
+  // ⚠️ ძალიან მნიშვნელოვანია
+  tctx.fillStyle = "white";
+  tctx.font = "bold 160px sans-serif";
+  tctx.textAlign = "center";
+  tctx.textBaseline = "middle";
+
+  tctx.fillText("AI", temp.width / 2, temp.height / 2);
+
+  const img = tctx.getImageData(0, 0, temp.width, temp.height).data;
+  textPoints = [];
+
+  for (let y = 0; y < temp.height; y += 4) {
+    for (let x = 0; x < temp.width; x += 4) {
+      const index = (y * temp.width + x) * 4 + 3;
+      if (img[index] > 150) {
+        textPoints.push({ x, y });
+      }
+    }
+  }
+
+  // 👇 ეს ხაზია კრიტიკული
+  console.log("TEXT POINTS:", textPoints.length);
+}
 
 function assignTargets() {
   particles.forEach(p => {
@@ -44,69 +71,26 @@ function animate() {
       p.vx += (p.target.x - p.x) * 0.02;
       p.vy += (p.target.y - p.y) * 0.02;
     } else {
-      const dx = center.x - p.x;
-      const dy = center.y - p.y;
-      p.vx += dx * 0.00001;
-      p.vy += dy * 0.00001;
+      p.vx += (Math.random() - 0.5) * 0.02;
+      p.vy += (Math.random() - 0.5) * 0.02;
     }
 
     p.x += p.vx;
     p.y += p.vy;
 
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(0,255,255,1)";
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = "#00ffff";
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = "#00ffff";
     ctx.fill();
   });
-
-  timer++;
-
-  if (timer === 180) {
-    assignTargets();
-    mode = "TEXT";
-  }
-
-  if (timer === 520) {
-    mode = "FLOW";
-  }
-
-  if (timer > 800) {
-    timer = 0;
-  }
 
   requestAnimationFrame(animate);
 }
 
-function generateTextPoints(text) {
-  const tempCanvas = document.createElement("canvas");
-  const tctx = tempCanvas.getContext("2d");
-
-  tempCanvas.width = canvas.width;
-  tempCanvas.height = canvas.height;
-
-  tctx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
-  tctx.font = "bold 140px Arial";
-  tctx.textAlign = "center";
-  tctx.textBaseline = "middle";
-  tctx.fillStyle = "white";
-  tctx.fillText(text, center.x, center.y - 40);
-
-  const imgData = tctx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
-  const points = [];
-
-  for (let y = 0; y < tempCanvas.height; y += 5) {
-    for (let x = 0; x < tempCanvas.width; x += 5) {
-      const index = (y * tempCanvas.width + x) * 4;
-      if (imgData.data[index + 3] > 150) {
-        points.push({ x, y });
-      }
-    }
-  }
-
-  return points;
-}
-
+// --- INIT ---
+createParticles();
+generateTextPoints();
+assignTargets();
+mode = "TEXT";
 animate();
 
