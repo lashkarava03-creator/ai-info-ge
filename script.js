@@ -102,3 +102,28 @@ function animate() {
 }
 
 animate();
+
+const stones = document.querySelectorAll("[data-stone]");
+
+function animateStones() {
+  stones.forEach((stone, index) => {
+    setTimeout(() => {
+      stone.style.opacity = "1";
+      stone.style.transform = stone.dataset.out;
+    }, index * 150);
+  });
+
+  // დაბრუნება უკან
+  setTimeout(() => {
+    stones.forEach(stone => {
+      stone.style.opacity = "0";
+      stone.style.transform = "translate(-50%, -50%) scale(0.9)";
+    });
+  }, 5000);
+}
+
+// პირველად ჩატვირთვისას
+animateStones();
+
+// ყოველ 2 წუთში
+setInterval(animateStones, 120000);
