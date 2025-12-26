@@ -6,7 +6,7 @@ let textPoints = [];
 let mode = "FLOW";
 let timer = 0;
 
-const count = 140;
+const PARTICLE_COUNT = 180;
 const center = { x: 0, y: 0 };
 
 function resize() {
@@ -14,71 +14,83 @@ function resize() {
   canvas.height = window.innerHeight;
   center.x = canvas.width / 2;
   center.y = canvas.height / 2;
-  textPoints = makeText("AI");
+  textPoints = generateTextPoints("AI");
 }
 
 window.addEventListener("resize", resize);
 resize();
 
-for (let i = 0; i < count; i++) {
-  particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 0.5,
-    vy: (Math.random() - 0.5) * 0.5,
-    r: Math.random() * 2 + 1
-  });
-}
+// ნაწილაკები
+particles = Array.from({ length: PARTICLE_COUNT }, () => ({
+  x: Math.random() * canvas.width,
+  y: Math.random() * canvas.height,
+  vx: (Math.random() - 0.5) * 0.6,
+  vy: (Math.random() - 0.5) * 0.6,
+  r: Math.random() * 2 + 1
+}));
 
 function animate() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  particles.forEach((p,i)=>{
+  particles.forEach((p, i) => {
     if (mode === "TEXT" && textPoints[i]) {
-      p.vx += (textPoints[i].x - p.x) * 0.01;
-      p.vy += (textPoints[i].y - p.y) * 0.01;
+      p.vx += (textPoints[i].x - p.x) * 0.015;
+      p.vy += (textPoints[i].y - p.y) * 0.015;
+    }
+
+    if (mode === "FLOW") {
+      const dx = center.x - p.x;
+      const dy = center.y - p.y;
+      p.vx += dx * 0.00001;
+      p.vy += dy * 0.00001;
     }
 
     p.x += p.vx;
     p.y += p.vy;
 
     ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle = "#00ffff";
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(0,255,255,1)";
     ctx.shadowBlur = 10;
     ctx.shadowColor = "#00ffff";
     ctx.fill();
   });
 
   timer++;
-  if (timer === 200) mode = "TEXT";
-  if (timer === 500) mode = "FLOW";
-  if (timer > 700) timer = 0;
+
+  if (timer === 200) mode = "TEXT";     // იკრიბება AI
+  if (timer === 520) mode = "FLOW";     // იშლება
+  if (timer > 750) timer = 0;
 
   requestAnimationFrame(animate);
 }
 
-function makeText(text){
-  const t = document.createElement("canvas");
-  const c = t.getContext("2d");
-  t.width = canvas.width;
-  t.height = canvas.height;
+function generateTextPoints(text) {
+  const tempCanvas = document.createElement("canvas");
+  const tctx = tempCanvas.getContext("2d");
 
-  c.font = "bold 140px Arial";
-  c.textAlign = "center";
-  c.textBaseline = "middle";
-  c.fillText(text, center.x, center.y);
+  tempCanvas.width = canvas.width;
+  tempCanvas.height = canvas.height;
 
-  const data = c.getImageData(0,0,t.width,t.height).data;
-  const pts = [];
+  tctx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+  tctx.font = "bold 140px Arial";
+  tctx.textAlign = "center";
+  tctx.textBaseline = "middle";
+  tctx.fillStyle = "white";
+  tctx.fillText(text, center.x, center.y - 40);
 
-  for(let y=0;y<t.height;y+=6){
-    for(let x=0;x<t.width;x+=6){
-      const i=(y*t.width+x)*4;
-      if(data[i+3]>150) pts.push({x,y});
+  const imgData = tctx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+  const points = [];
+
+  for (let y = 0; y < tempCanvas.height; y += 6) {
+    for (let x = 0; x < tempCanvas.width; x += 6) {
+      const index = (y * tempCanvas.width + x) * 4;
+      if (imgData.data[index + 3] > 150) {
+        points.push({ x, y });
+      }
     }
   }
-  return pts;
+  return points;
 }
 
 animate();
