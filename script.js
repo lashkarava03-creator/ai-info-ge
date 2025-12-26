@@ -9,7 +9,6 @@ function resize() {
 window.addEventListener("resize", resize);
 resize();
 
-// --- პარამეტრები ---
 const dots = [];
 const DOT_COUNT = 180;
 let textPoints = [];
@@ -21,13 +20,13 @@ for (let i = 0; i < DOT_COUNT; i++) {
   dots.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 0.4,
-    vy: (Math.random() - 0.5) * 0.4,
+    vx: (Math.random() - 0.5) * 0.6,
+    vy: (Math.random() - 0.5) * 0.6,
     target: null
   });
 }
 
-// --- AI ტექსტის წერტილებად გადაყვანა ---
+// --- ტექსტის წერტილებად გადაყვანა ---
 function generateTextPoints(text) {
   const tCanvas = document.createElement("canvas");
   const tctx = tCanvas.getContext("2d");
@@ -69,13 +68,20 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   dots.forEach(dot => {
+
     if (forming && dot.target) {
+      // AI ფორმირება
       dot.vx += (dot.target.x - dot.x) * 0.004;
       dot.vy += (dot.target.y - dot.y) * 0.004;
+    } else {
+      // თავისუფალი მოძრაობა
+      dot.vx += (Math.random() - 0.5) * 0.02;
+      dot.vy += (Math.random() - 0.5) * 0.02;
     }
 
-    dot.vx *= 0.9;
-    dot.vy *= 0.9;
+    // დამშვიდება
+    dot.vx *= 0.92;
+    dot.vy *= 0.92;
 
     dot.x += dot.vx;
     dot.y += dot.vy;
