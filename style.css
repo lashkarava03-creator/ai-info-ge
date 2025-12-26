@@ -1,38 +1,79 @@
-<!DOCTYPE html>
-<html lang="ka">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ხელოვნური ინტელექტი</title>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  <!-- SEO -->
-  <meta name="description" content="ხელოვნური ინტელექტი მარტივად, გასაგებად და პრაქტიკულად." />
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
 
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+/* ფონზე ფოტო */
+.hero {
+  position: fixed;
+  inset: 0;
+  background: url("ai.png") center / cover no-repeat;
+  z-index: 1;
+}
 
-  <!-- HERO ფონზე -->
-  <div class="hero"></div>
+/* მუქი ფენა */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+}
 
-  <!-- წერტილების Canvas -->
-  <canvas id="neural-canvas"></canvas>
+/* წერტილები */
+#neural-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
 
-  <!-- კონტენტი -->
-  <div class="content">
-    <h1>ხელოვნური ინტელექტი მარტივად</h1>
+/* თანოსის ხელი */
+.thanos-hand {
+  position: absolute;
+  bottom: 14%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  z-index: 4;
+  filter: drop-shadow(0 0 20px rgba(0,255,255,0.4));
+}
 
-    <p class="subtitle">
-      აქ გაიგებ, რა არის ხელოვნური ინტელექტი, როგორ მუშაობს  
-      და როგორ შეგიძლია გამოიყენო ყოველდღიურ ცხოვრებაში.
-    </p>
+/* ტექსტი */
+.content {
+  position: relative;
+  z-index: 3;
+  color: white;
+  text-align: center;
+  top: 58%;
+  transform: translateY(-50%);
+  padding: 0 20px;
+}
 
-    <div class="warning">
-      <strong>გაფრთხილება:</strong><br />
-      დამიჯერე, იმაზე მეტს გაიგებ, ვიდრე იცი.
-    </div>
-  </div>
+.content h1 {
+  font-size: 38px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px rgba(0,255,255,0.4);
+}
 
-  <script src="script.js"></script>
-</body>
-</html>
+.subtitle {
+  margin-top: 12px;
+  opacity: 0.85;
+  font-size: 15px;
+}
+
+.warning {
+  margin-top: 18px;
+  padding: 12px;
+  border-left: 3px solid #00ffff;
+  background: rgba(0,255,255,0.08);
+  display: inline-block;
+  font-size: 14px;
+}
