@@ -99,5 +99,3 @@ function generateTextPoints(text) {
 
 // --- გაშვება ---
 animate();
-
-
