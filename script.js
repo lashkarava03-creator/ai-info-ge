@@ -5,125 +5,74 @@ function resize() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-window.addEventListener("resize", resize);
 resize();
+window.addEventListener("resize", resize);
 
-// ===== SETTINGS =====
-const PARTICLE_COUNT = 220;
-const TEXT = "AI";
-const FORM_SPEED = 0.08;
-const FLOAT_SPEED = 0.4;
-
-// ===== STATE =====
-let mode = "FLOAT"; // FLOAT | FORM | DISPERSE
-let timer = 0;
-let textPoints = [];
-
-// ===== PARTICLES =====
+// ნაწილაკები
 const particles = [];
+const COUNT = 140;
 
-for (let i = 0; i < PARTICLE_COUNT; i++) {
+for (let i = 0; i < COUNT; i++) {
   particles.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * FLOAT_SPEED,
-    vy: (Math.random() - 0.5) * FLOAT_SPEED,
-    r: 2
+    vx: (Math.random() - 0.5) * 0.6,
+    vy: (Math.random() - 0.5) * 0.6
   });
 }
 
-// ===== TEXT POINTS =====
-function generateTextPoints(text) {
-  const temp = document.createElement("canvas");
-  const tctx = temp.getContext("2d");
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  temp.width = canvas.width;
-  temp.height = canvas.height;
+  particles.forEach((p,i)=>{
+    p.x += p.vx;
+    p.y += p.vy;
 
-  tctx.fillStyle = "white";
-  tctx.textAlign = "center";
-  tctx.textBaseline = "middle";
-  tctx.font = "bold 160px Arial";
-  tctx.fillText(text, canvas.width / 2, canvas.height / 2 - 30 );
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-  const data = tctx.getImageData(0, 0, canvas.width, canvas.height).data;
-  const points = [];
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,1.6,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,255,255,0.9)";
+    ctx.fill();
 
-  for (let y = 0; y < canvas.height; y += 4) {
-    for (let x = 0; x < canvas.width; x += 4) {
-      const i = (y * canvas.width + x) * 4;
-      if (data[i + 3] > 150) {
-        points.push({ x, y });
+    for (let j=i+1;j<particles.length;j++){
+      const p2=particles[j];
+      const d=Math.hypot(p.x-p2.x,p.y-p2.y);
+      if(d<120){
+        ctx.strokeStyle=`rgba(0,255,255,${1-d/120})`;
+        ctx.beginPath();
+        ctx.moveTo(p.x,p.y);
+        ctx.lineTo(p2.x,p2.y);
+        ctx.stroke();
       }
     }
-  }
-  return points;
-}
-
-textPoints = generateTextPoints(TEXT);
-
-// ===== ANIMATION =====
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  particles.forEach((p, i) => {
-    if (mode === "FORM" && textPoints[i]) {
-      // --- FORM AI ---
-      p.x += (textPoints[i].x - p.x) * FORM_SPEED;
-      p.y += (textPoints[i].y - p.y) * FORM_SPEED;
-    } 
-    else {
-      // --- FLOAT / DISPERSE ---
-      p.x += p.vx;
-      p.y += p.vy;
-
-      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-    }
-
-    // DRAW PARTICLE
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(0,255,255,1)";
-    ctx.shadowColor = "rgba(0,255,255,0.9)";
-    ctx.shadowBlur = 10;
-    ctx.fill();
   });
-
-  // ===== TIMELINE =====
-  timer++;
-
-  if (timer === 180) mode = "FORM";      // იკრიბება AI
-  if (timer === 420) mode = "DISPERSE";  // იფანტება
-  if (timer === 520) mode = "FLOAT";     // თავისუფალი მოძრაობა
-  if (timer > 700) timer = 0;
 
   requestAnimationFrame(animate);
 }
-
 animate();
 
-const stones = document.querySelectorAll("[data-stone]");
+/* ქვების ანიმაცია */
+const stones = document.querySelectorAll(".stone");
 
 function animateStones() {
-  stones.forEach((stone, index) => {
-    setTimeout(() => {
-      stone.style.opacity = "1";
-      stone.style.transform = stone.dataset.out;
-    }, index * 150);
-  });
+  stones[0].style.transform = "translate(-140px,-80px)";
+  stones[1].style.transform = "translate(-90px,-140px)";
+  stones[2].style.transform = "translate(140px,-80px)";
+  stones[3].style.transform = "translate(90px,-140px)";
+  stones[4].style.transform = "translate(0px,-170px)";
 
-  // დაბრუნება უკან
-  setTimeout(() => {
-    stones.forEach(stone => {
-      stone.style.opacity = "0";
-      stone.style.transform = "translate(-50%, -50%) scale(0.9)";
+  stones.forEach(s => s.style.opacity = "1");
+
+  setTimeout(()=>{
+    stones.forEach(s=>{
+      s.style.opacity="0";
+      s.style.transform="translate(-50%,-50%)";
     });
-  }, 5000);
+  },5000);
 }
 
-// პირველად ჩატვირთვისას
 animateStones();
-
-// ყოველ 2 წუთში
 setInterval(animateStones, 120000);
+
