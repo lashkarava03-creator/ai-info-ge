@@ -79,13 +79,13 @@ html, body {
 }
 .stones {
   position: absolute;
-  bottom: 15%;
+  bottom: 22%;        /* ხელიდან ზემოთ ავწიეთ */
   left: 50%;
-  width: 260px;
-  height: 260px;
+  width: 240px;       /* ცოტა შევამცირეთ წრე */
+  height: 200px;
   transform: translateX(-50%);
-  pointer-events: auto;
   z-index: 5;
+
 }
 
 .stone {
