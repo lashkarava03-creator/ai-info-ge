@@ -77,3 +77,36 @@ html, body {
   display: inline-block;
   font-size: 14px;
 }
+.stones {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  width: 260px;
+  height: 260px;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  z-index: 5;
+}
+
+.stone {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: cyan;
+  box-shadow: 0 0 15px rgba(0,255,255,0.9);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* წრიული განლაგება */
+.stone:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
+.stone:nth-child(2) { top: 25%; right: 0; }
+.stone:nth-child(3) { bottom: 0; left: 50%; transform: translateX(-50%); }
+.stone:nth-child(4) { top: 25%; left: 0; }
+.stone:nth-child(5) { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+/* hover */
+.stone:hover {
+  transform: scale(1.4);
+  box-shadow: 0 0 25px rgba(0,255,255,1);
+}
