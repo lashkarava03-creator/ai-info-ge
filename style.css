@@ -99,11 +99,12 @@ html, body {
 }
 
 /* წრიული განლაგება */
-.stone:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
-.stone:nth-child(2) { top: 25%; right: 0; }
-.stone:nth-child(3) { bottom: 0; left: 50%; transform: translateX(-50%); }
-.stone:nth-child(4) { top: 25%; left: 0; }
-.stone:nth-child(5) { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.stone:nth-child(1) { top: 10px; left: 50%; transform: translateX(-50%); }
+.stone:nth-child(2) { top: 40px; right: 15px; }
+.stone:nth-child(3) { top: 110px; right: 40px; }
+.stone:nth-child(4) { top: 110px; left: 40px; }
+.stone:nth-child(5) { top: 40px; left: 15px; }
+}
 
 /* hover */
 .stone:hover {
