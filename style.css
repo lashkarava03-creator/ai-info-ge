@@ -11,7 +11,7 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
-/* ფონზე ფოტო */
+/* ფონზე */
 .hero {
   position: fixed;
   inset: 0;
@@ -19,7 +19,6 @@ html, body {
   z-index: 1;
 }
 
-/* მუქი ფენა */
 .hero::before {
   content: "";
   position: absolute;
@@ -27,23 +26,12 @@ html, body {
   background: rgba(0,0,0,0.55);
 }
 
-/* წერტილები */
+/* Canvas */
 #neural-canvas {
   position: fixed;
   inset: 0;
   z-index: 2;
   pointer-events: none;
-}
-
-/* თანოსის ხელი */
-.thanos-hand {
-  position: absolute;
-  bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 160px;
-  z-index: 4;
-  filter: drop-shadow(0 0 20px rgba(0,255,255,0.4));
 }
 
 /* ტექსტი */
@@ -77,67 +65,42 @@ html, body {
   display: inline-block;
   font-size: 14px;
 }
-.stones {
+
+/* თანოსის ხელი */
+.thanos-hand {
   position: absolute;
-  bottom: 20%;
+  bottom: 15%;
   left: 50%;
-  width: 190px;     /* უფრო მჭიდრო */
-  height: 170px;
   transform: translateX(-50%);
-  z-index: 5;
-
-
-
+  width: 160px;
+  z-index: 4;
+  filter: drop-shadow(0 0 20px rgba(0,255,255,0.4));
 }
 
+/* ქვების კონტეინერი */
+.stones {
+  position: absolute;
+  bottom: 18%;
+  left: 50%;
+  width: 260px;
+  height: 220px;
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+/* ქვა */
 .stone {
   position: absolute;
   width: 28px;
   height: 28px;
   border-radius: 50%;
   background: cyan;
-  box-shadow: 0 0 15px rgba(0,255,255,0.9);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.stone:nth-child(1) { 
-  top: 15px; 
-  left: 50%; 
-  transform: translateX(-50%); 
-}
-
-.stone:nth-child(2) { 
-  top: 45px; 
-  right: 35px; 
-}
-
-.stone:nth-child(3) { 
-  top: 95px; 
-  right: 55px; 
-}
-
-.stone:nth-child(4) { 
-  top: 95px; 
-  left: 55px; 
-}
-
-.stone:nth-child(5) { 
-  top: 45px; 
-  left: 35px; 
-}
-
-
-
-/* hover */
-.stone:hover {
-  transform: scale(1.4);
-  box-shadow: 0 0 25px rgba(0,255,255,1);
-}
-.stone {
+  box-shadow: 0 0 18px rgba(0,255,255,0.9);
   animation: pulse 2.5s infinite ease-in-out;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-}
+/* არაგეომეტრიული განლაგება — 6 ქვა */
+.stone:nth-child(1) { top: 70px; left: 25px; }
+.stone:nth-child(2) { top: 120px; left: 55px; }
+.stone:nth-child(3) { top: 155px; left: 125px; }
+.stone:nth-child(4) { top: 1
