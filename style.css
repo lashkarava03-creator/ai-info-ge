@@ -38,7 +38,7 @@ html, body {
 /* თანოსის ხელი */
 .thanos-hand {
   position: absolute;
-  bottom: 14%;
+  bottom: 70%;
   left: 50%;
   transform: translateX(-50%);
   width: 160px;
