@@ -79,12 +79,14 @@ html, body {
 }
 .stones {
   position: absolute;
-  bottom: 22%;        /* ხელიდან ზემოთ ავწიეთ */
+  bottom: 20%;
   left: 50%;
-  width: 240px;       /* ცოტა შევამცირეთ წრე */
-  height: 200px;
+  width: 190px;     /* უფრო მჭიდრო */
+  height: 170px;
   transform: translateX(-50%);
   z-index: 5;
+
+
 
 }
 
@@ -98,13 +100,33 @@ html, body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* წრიული განლაგება */
-.stone:nth-child(1) { top: 10px; left: 50%; transform: translateX(-50%); }
-.stone:nth-child(2) { top: 40px; right: 15px; }
-.stone:nth-child(3) { top: 110px; right: 40px; }
-.stone:nth-child(4) { top: 110px; left: 40px; }
-.stone:nth-child(5) { top: 40px; left: 15px; }
+.stone:nth-child(1) { 
+  top: 15px; 
+  left: 50%; 
+  transform: translateX(-50%); 
 }
+
+.stone:nth-child(2) { 
+  top: 45px; 
+  right: 35px; 
+}
+
+.stone:nth-child(3) { 
+  top: 95px; 
+  right: 55px; 
+}
+
+.stone:nth-child(4) { 
+  top: 95px; 
+  left: 55px; 
+}
+
+.stone:nth-child(5) { 
+  top: 45px; 
+  left: 35px; 
+}
+
+
 
 /* hover */
 .stone:hover {
