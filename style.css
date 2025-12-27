@@ -103,4 +103,17 @@ html, body {
 .stone:nth-child(1) { top: 70px; left: 25px; }
 .stone:nth-child(2) { top: 120px; left: 55px; }
 .stone:nth-child(3) { top: 155px; left: 125px; }
-.stone:nth-child(4) { top: 1
+.stone:nth-child(4) { top: 120px; right: 55px; }
+.stone:nth-child(5) { top: 70px; right: 25px; }
+.stone:nth-child(6) { top: 35px; left: 120px; }
+
+/* პულსაცია */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+
+#neural-canvas {
+  mask-image: radial-gradient(circle at 50% 35%, black 40%, transparent 70%);
+}
