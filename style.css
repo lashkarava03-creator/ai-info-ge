@@ -80,7 +80,7 @@ html, body {
 /* ქვების კონტეინერი */
 .stones {
   position: absolute;
-  bottom: 18%;
+  bottom: 10%;
   left: 50%;
   width: 260px;
   height: 220px;
