@@ -1,5 +1,6 @@
 const canvas = document.getElementById("neural-canvas");
 const ctx = canvas.getContext("2d");
+const stones = document.querySelector(".stones");
 
 function resize() {
   canvas.width = window.innerWidth;
@@ -68,12 +69,9 @@ function animate() {
 
   particles.forEach((p, i) => {
     if (mode === "FORM" && textPoints[i]) {
-      // --- FORM AI ---
       p.x += (textPoints[i].x - p.x) * FORM_SPEED;
       p.y += (textPoints[i].y - p.y) * FORM_SPEED;
-    } 
-    else {
-      // --- FLOAT / DISPERSE ---
+    } else {
       p.x += p.vx;
       p.y += p.vy;
 
@@ -81,7 +79,6 @@ function animate() {
       if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
     }
 
-    // DRAW PARTICLE
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.fillStyle = "rgba(0,255,255,1)";
@@ -89,28 +86,28 @@ function animate() {
     ctx.shadowBlur = 10;
     ctx.fill();
   });
-// ===== TIMELINE =====
-timer++;
 
-const stones = document.querySelector(".stones");
+  // ===== TIMELINE =====
+  timer++;
 
-if (timer === 180) {
-  mode = "FORM";                 // AI იკრიბება
-  stones.classList.add("ai-mode");
+  if (timer === 180) {
+    mode = "FORM";
+    if (stones) stones.classList.add("ai-mode");
+  }
+
+  if (timer === 420) {
+    mode = "DISPERSE";
+    if (stones) stones.classList.remove("ai-mode");
+  }
+
+  if (timer === 520) {
+    mode = "FLOAT";
+  }
+
+  if (timer > 700) timer = 0;
+
+  requestAnimationFrame(animate);
 }
 
-if (timer === 420) {
-  mode = "DISPERSE";             // AI იფანტება
-  stones.classList.remove("ai-mode");
-}
-
-if (timer === 520) {
-  mode = "FLOAT";                // თავისუფალი მოძრაობა
-}
-
-if (timer > 700) timer = 0;
-
-requestAnimationFrame(animate);
-
-
+// 🔥 სტარტი — ერთხელ
 animate();
