@@ -91,13 +91,17 @@ html, body {
 /* ქვა */
 .stone {
   position: absolute;
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  background: cyan;
-  box-shadow: 0 0 18px rgba(0,255,255,0.9);
-  animation: pulse 2.5s infinite ease-in-out;
+  background: radial-gradient(circle, #00ffff, #007777);
+  box-shadow:
+    0 0 12px rgba(0,255,255,0.9),
+    0 0 25px rgba(0,255,255,0.6);
+  animation: float 4s ease-in-out infinite;
+  cursor: pointer;
 }
+
 
 /* არაგეომეტრიული განლაგება — 6 ქვა */
 .stone:nth-child(1) { top: 70px; left: 25px; }
