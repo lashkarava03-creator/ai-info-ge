@@ -89,16 +89,28 @@ function animate() {
     ctx.shadowBlur = 10;
     ctx.fill();
   });
+// ===== TIMELINE =====
+timer++;
 
-  // ===== TIMELINE =====
-  timer++;
+const stones = document.querySelector(".stones");
 
-  if (timer === 180) mode = "FORM";      // იკრიბება AI
-  if (timer === 420) mode = "DISPERSE";  // იფანტება
-  if (timer === 520) mode = "FLOAT";     // თავისუფალი მოძრაობა
-  if (timer > 700) timer = 0;
-
-  requestAnimationFrame(animate);
+if (timer === 180) {
+  mode = "FORM";                 // AI იკრიბება
+  stones.classList.add("ai-mode");
 }
+
+if (timer === 420) {
+  mode = "DISPERSE";             // AI იფანტება
+  stones.classList.remove("ai-mode");
+}
+
+if (timer === 520) {
+  mode = "FLOAT";                // თავისუფალი მოძრაობა
+}
+
+if (timer > 700) timer = 0;
+
+requestAnimationFrame(animate);
+
 
 animate();
