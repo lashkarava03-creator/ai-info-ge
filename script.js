@@ -1,3 +1,8 @@
+const stonesContainer = document.querySelector(".stones");
+
+// ხელთათმანის ცენტრი
+let centerX, centerY;
+
 const canvas = document.getElementById("neural-canvas");
 const ctx = canvas.getContext("2d");
 const stones = document.querySelector(".stones");
@@ -8,6 +13,15 @@ function resize() {
 }
 window.addEventListener("resize", resize);
 resize();
+function updateCenter() {
+  const rect = stonesContainer.getBoundingClientRect();
+  centerX = rect.width / 2;
+  centerY = rect.height / 2;
+}
+
+updateCenter();
+window.addEventListener("resize", updateCenter);
+
 
 // ===== SETTINGS =====
 const PARTICLE_COUNT = 220;
@@ -62,6 +76,18 @@ function generateTextPoints(text) {
 }
 
 textPoints = generateTextPoints(TEXT);
+const stoneElements = document.querySelectorAll(".stone");
+
+const stoneOrbitData = [];
+
+stoneElements.forEach((stone, i) => {
+  stoneOrbitData.push({
+    el: stone,
+    angle: (Math.PI * 2 / stoneElements.length) * i,
+    speed: 0.003 + Math.random() * 0.002,
+    radius: 90
+  });
+});
 
 // ===== ANIMATION =====
 function animate() {
@@ -86,6 +112,17 @@ function animate() {
     ctx.shadowBlur = 10;
     ctx.fill();
   });
+if (!stonesContainer.classList.contains("ai-mode")) {
+  stoneOrbitData.forEach(stone => {
+    stone.angle += stone.speed;
+
+    const x = centerX + Math.cos(stone.angle) * stone.radius;
+    const y = centerY + Math.sin(stone.angle) * stone.radius;
+
+    stone.el.style.left = `${x}px`;
+    stone.el.style.top = `${y}px`;
+  });
+}
 
   // ===== TIMELINE =====
   timer++;
