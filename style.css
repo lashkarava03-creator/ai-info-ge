@@ -193,3 +193,24 @@ html, body {
 .stone {
   transition: 0.4s ease;
 }
+/* 3D ფრენა — როცა AI რეჟიმი არ არის */
+.stones:not(.ai-mode) .stone {
+  animation: float3d 6s ease-in-out infinite;
+}
+
+/* როცა AI იკრიბება — ყველაფერი ჩერდება */
+.stones.ai-mode .stone {
+  animation: none;
+  transform: translateZ(0);
+}
+@keyframes float3d {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(8px, -10px, 20px) scale(1.15);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
