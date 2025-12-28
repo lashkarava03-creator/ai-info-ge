@@ -152,3 +152,33 @@ html, body {
 .stone:hover::after {
   opacity: 1;
 }
+/* ინდივიდუალური ფერები ქვებისთვის */
+.stone:nth-child(1) {
+  background: radial-gradient(circle, #00ffff, #006666); /* ცისფერი */
+  box-shadow: 0 0 15px rgba(0,255,255,0.9);
+}
+
+.stone:nth-child(2) {
+  background: radial-gradient(circle, #ff00ff, #660066); /* იასამნისფერი */
+  box-shadow: 0 0 15px rgba(255,0,255,0.9);
+}
+
+.stone:nth-child(3) {
+  background: radial-gradient(circle, #00ff88, #006644); /* მწვანე */
+  box-shadow: 0 0 15px rgba(0,255,136,0.9);
+}
+
+.stone:nth-child(4) {
+  background: radial-gradient(circle, #ffd700, #665500); /* ოქროსფერი */
+  box-shadow: 0 0 15px rgba(255,215,0,0.9);
+}
+
+.stone:nth-child(5) {
+  background: radial-gradient(circle, #ff4444, #661111); /* წითელი */
+  box-shadow: 0 0 15px rgba(255,68,68,0.9);
+}
+
+.stone:nth-child(6) {
+  background: radial-gradient(circle, #ffffff, #777777); /* თეთრი */
+  box-shadow: 0 0 15px rgba(255,255,255,0.9);
+}
