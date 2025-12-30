@@ -75,7 +75,7 @@ html, body {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 26px;
+  gap: 6px;
   z-index: 5;
 }
 .stone::before {
@@ -198,10 +198,11 @@ html, body {
   animation: none !important;
 }
 
-.stone:first-child {
-  animation: cradle-left 2s infinite !important;
+.stone:nth-child(1) {
+  animation: cradle-left 2.4s ease-in-out infinite;
 }
-body {
-  background: red !important;
+
+.stone:nth-child(6) {
+  animation: cradle-right 2.4s ease-in-out infinite;
 }
 
