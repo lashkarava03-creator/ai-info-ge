@@ -1,108 +1,46 @@
-/* Newton’s Cradle კონტეინერი */
-.stones {
-  position: absolute;
-  bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 6px;
-  z-index: 5;
-}
-
-/* ძაფი */
-.stone::before {
-  content: "";
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  width: 1px;
-  height: 60px;
-  transform: translateX(-50%);
-  background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.6),
-    rgba(255,255,255,0.1)
-  );
-}
-
-/* ბურთები */
-.stone {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  position: relative;
-  transform-origin: 50% -260%;
-  filter: drop-shadow(0 6px 8px rgba(0,0,0,0.35));
-  will-change: transform;
-}
-
-/* ფერები (უცვლელი) */
-.stone:nth-child(1) {
-  background: radial-gradient(circle, #00ffff, #006666);
-}
-.stone:nth-child(2) {
-  background: radial-gradient(circle, #ff00ff, #660066);
-}
-.stone:nth-child(3) {
-  background: radial-gradient(circle, #00ff88, #006644);
-}
-.stone:nth-child(4) {
-  background: radial-gradient(circle, #ffd700, #665500);
-}
-.stone:nth-child(5) {
-  background: radial-gradient(circle, #ff4444, #661111);
-}
-.stone:nth-child(6) {
-  background: radial-gradient(circle, #ffffff, #777777);
-}
-
-/* ✅ ბუნებრივი მოძრაობა */
+/* მხოლოდ крайние ბურთები მოძრაობენ */
 .stone:first-child {
-  animation: cradle-left 1s
-    cubic-bezier(0.25, 0.46, 0.45, 0.94)
-    infinite alternate;
+  animation: left-hit 1.2s infinite;
 }
 
 .stone:last-child {
-  animation: cradle-right 1s
-    cubic-bezier(0.25, 0.46, 0.45, 0.94)
-    infinite alternate;
+  animation: right-hit 1.2s infinite;
 }
 
-/* მარცხენა დარტყმა */
-@keyframes cradle-left {
+/* მარცხენა ბურთი */
+@keyframes left-hit {
   0% {
-    transform: rotate(28deg);
+    transform: rotate(30deg);
   }
-  60% {
+
+  18% {
     transform: rotate(0deg);
   }
+
+  50% {
+    transform: rotate(0deg);
+  }
+
   100% {
     transform: rotate(0deg);
   }
 }
 
-/* მარჯვენა დარტყმა */
-@keyframes cradle-right {
+/* მარჯვენა ბურთი */
+@keyframes right-hit {
   0% {
     transform: rotate(0deg);
   }
-  40% {
+
+  50% {
     transform: rotate(0deg);
   }
+
+  68% {
+    transform: rotate(-30deg);
+  }
+
   100% {
-    transform: rotate(-28deg);
+    transform: rotate(0deg);
   }
 }
-
-/* AI რეჟიმი */
-.stones.ai-mode .stone {
-  animation: none !important;
-  background: radial-gradient(circle, #00ffff, #004444) !important;
-  box-shadow: 0 0 20px rgba(0,255,255,1) !important;
-}
-
-.stone:nth-child(6) {
-  animation: cradle-right 2.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-
