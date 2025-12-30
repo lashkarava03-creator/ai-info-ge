@@ -77,26 +77,26 @@ html, body {
   filter: drop-shadow(0 0 20px rgba(0,255,255,0.4));
 }
 
-/* ქვების კონტეინერი */
 .stones {
   position: absolute;
-  bottom: 7%;
+  bottom: 15%;              
   left: 50%;
-  width: 260px;
-  height: 220px;
   transform: translateX(-50%);
+  display: flex;
+  gap: 26px;
   z-index: 5;
 }
 
-/* ქვა */
+
+/* ბურთი */
 .stone {
-  position: absolute;
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.4s ease;
+  position: relative;
+  transform-origin: top center;
 }
+
 
 
 
@@ -214,3 +214,29 @@ html, body {
 .stones {
   perspective: 800px;
 }
+
+.stone:first-child {
+  animation: cradle-left 2.4s ease-in-out infinite;
+}
+.stone:last-child {
+  animation: cradle-right 2.4s ease-in-out infinite;
+}
+@keyframes cradle-left {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(-35deg); }
+  40%  { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes cradle-right {
+  0%   { transform: rotate(0deg); }
+  60%  { transform: rotate(0deg); }
+  80%  { transform: rotate(35deg); }
+  100% { transform: rotate(0deg); }
+}
+.stone {
+  box-shadow:
+    0 0 12px currentColor,
+    0 0 25px rgba(0,255,255,0.4);
+}
+
