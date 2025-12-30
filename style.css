@@ -191,12 +191,6 @@ html, body {
   background: radial-gradient(circle, #00ffff, #004444) !important;
   box-shadow: 0 0 20px rgba(0,255,255,1) !important;
 }
-.stones.ai-mode .stone {
-  animation: none !important;
-}
-.stone {
-  animation: none !important;
-}
 
 .stone:nth-child(1) {
   animation: cradle-left 2.4s ease-in-out infinite;
@@ -205,4 +199,3 @@ html, body {
 .stone:nth-child(6) {
   animation: cradle-right 2.4s ease-in-out infinite;
 }
-
