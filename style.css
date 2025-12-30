@@ -32,6 +32,7 @@ html, body {
   inset: 0;
   z-index: 2;
   pointer-events: none;
+  mask-image: radial-gradient(circle at 50% 35%, black 40%, transparent 70%);
 }
 
 /* ტექსტი */
@@ -66,20 +67,11 @@ html, body {
   font-size: 14px;
 }
 
-/* თანოსის ხელი */
-.thanos-hand {
-  position: absolute;
-  bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 160px;
-  z-index: 4;
-  filter: drop-shadow(0 0 20px rgba(0,255,255,0.4));
-}
-
+/* Newton’s Cradle კონტეინერი
+   ზუსტად თანოსის ხელის ძველ ლოკაციაზე */
 .stones {
   position: absolute;
-  bottom: 15%;              
+  bottom: 15%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -87,52 +79,58 @@ html, body {
   z-index: 5;
 }
 
-
-/* ბურთი */
+/* ბურთები */
 .stone {
   width: 22px;
   height: 22px;
   border-radius: 50%;
   position: relative;
   transform-origin: top center;
+  cursor: pointer;
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
 
-
-
-
-/* არაგეომეტრიული განლაგება — 6 ქვა */
-.stone:nth-child(1) { top: 70px; left: 25px; }
-.stone:nth-child(2) { top: 120px; left: 55px; }
-.stone:nth-child(3) { top: 155px; left: 125px; }
-.stone:nth-child(4) { top: 120px; right: 55px; }
-.stone:nth-child(5) { top: 70px; right: 25px; }
-.stone:nth-child(6) { top: 35px; left: 120px; }
-
-/* პულსაცია */
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
+/* ინდივიდუალური ფერები */
+.stone:nth-child(1) {
+  background: radial-gradient(circle, #00ffff, #006666);
+  box-shadow: 0 0 15px rgba(0,255,255,0.9);
 }
 
-
-#neural-canvas {
-  mask-image: radial-gradient(circle at 50% 35%, black 40%, transparent 70%);
-}
-@keyframes float {
-  0%   { transform: translateY(0) scale(1); }
-  50%  { transform: translateY(-6px) scale(1.1); }
-  100% { transform: translateY(0) scale(1); }
+.stone:nth-child(2) {
+  background: radial-gradient(circle, #ff00ff, #660066);
+  box-shadow: 0 0 15px rgba(255,0,255,0.9);
 }
 
+.stone:nth-child(3) {
+  background: radial-gradient(circle, #00ff88, #006644);
+  box-shadow: 0 0 15px rgba(0,255,136,0.9);
+}
+
+.stone:nth-child(4) {
+  background: radial-gradient(circle, #ffd700, #665500);
+  box-shadow: 0 0 15px rgba(255,215,0,0.9);
+}
+
+.stone:nth-child(5) {
+  background: radial-gradient(circle, #ff4444, #661111);
+  box-shadow: 0 0 15px rgba(255,68,68,0.9);
+}
+
+.stone:nth-child(6) {
+  background: radial-gradient(circle, #ffffff, #777777);
+  box-shadow: 0 0 15px rgba(255,255,255,0.9);
+}
+
+/* Hover ეფექტი */
 .stone:hover {
-  transform: scale(1.35);
+  transform: scale(1.3);
   filter: brightness(1.4);
   box-shadow:
     0 0 18px rgba(255,255,255,1),
     0 0 35px currentColor;
-
-
 }
+
+/* Tooltip */
 .stone::after {
   content: attr(data-ai);
   position: absolute;
@@ -153,74 +151,16 @@ html, body {
 .stone:hover::after {
   opacity: 1;
 }
-/* ინდივიდუალური ფერები ქვებისთვის */
-.stone:nth-child(1) {
-  background: radial-gradient(circle, #00ffff, #006666); /* ცისფერი */
-  box-shadow: 0 0 15px rgba(0,255,255,0.9);
-}
 
-.stone:nth-child(2) {
-  background: radial-gradient(circle, #ff00ff, #660066); /* იასამნისფერი */
-  box-shadow: 0 0 15px rgba(255,0,255,0.9);
-}
-
-.stone:nth-child(3) {
-  background: radial-gradient(circle, #00ff88, #006644); /* მწვანე */
-  box-shadow: 0 0 15px rgba(0,255,136,0.9);
-}
-
-.stone:nth-child(4) {
-  background: radial-gradient(circle, #ffd700, #665500); /* ოქროსფერი */
-  box-shadow: 0 0 15px rgba(255,215,0,0.9);
-}
-
-.stone:nth-child(5) {
-  background: radial-gradient(circle, #ff4444, #661111); /* წითელი */
-  box-shadow: 0 0 15px rgba(255,68,68,0.9);
-}
-
-.stone:nth-child(6) {
-  background: radial-gradient(circle, #ffffff, #777777); /* თეთრი */
-  box-shadow: 0 0 15px rgba(255,255,255,0.9);
-}
-.stones.ai-mode .stone {
-  background: radial-gradient(circle, #00ffff, #004444) !important;
-  box-shadow: 0 0 20px rgba(0,255,255,1) !important;
-}
-.stone {
-  transition: 0.4s ease;
-}
-/* 3D ფრენა — როცა AI რეჟიმი არ არის */
-.stones:not(.ai-mode) .stone {
-  animation: float3d 6s ease-in-out infinite;
-}
-
-/* როცა AI იკრიბება — ყველაფერი ჩერდება */
-.stones.ai-mode .stone {
-  animation: none;
-  transform: translateZ(0);
-}
-@keyframes float3d {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(8px, -10px, 20px) scale(1.15);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-.stones {
-  perspective: 800px;
-}
-
+/* Newton’s Cradle ანიმაცია */
 .stone:first-child {
   animation: cradle-left 2.4s ease-in-out infinite;
 }
+
 .stone:last-child {
   animation: cradle-right 2.4s ease-in-out infinite;
 }
+
 @keyframes cradle-left {
   0%   { transform: rotate(0deg); }
   20%  { transform: rotate(-35deg); }
@@ -234,9 +174,10 @@ html, body {
   80%  { transform: rotate(35deg); }
   100% { transform: rotate(0deg); }
 }
-.stone {
-  box-shadow:
-    0 0 12px currentColor,
-    0 0 25px rgba(0,255,255,0.4);
-}
 
+/* AI რეჟიმი — გაჩერება და ერთ ფერზე გადასვლა */
+.stones.ai-mode .stone {
+  animation: none !important;
+  background: radial-gradient(circle, #00ffff, #004444) !important;
+  box-shadow: 0 0 20px rgba(0,255,255,1) !important;
+}
