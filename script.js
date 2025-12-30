@@ -113,15 +113,7 @@ function animate() {
     ctx.fill();
   });
 if (!stonesContainer.classList.contains("ai-mode")) {
-  stoneOrbitData.forEach(stone => {
-    stone.angle += stone.speed;
 
-    const x = centerX + Math.cos(stone.angle) * stone.radius;
-    const y = centerY + Math.sin(stone.angle) * stone.radius;
-
-    stone.el.style.left = `${x}px`;
-    stone.el.style.top = `${y}px`;
-  });
 }
 
   // ===== TIMELINE =====
