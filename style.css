@@ -1,46 +1,213 @@
-/* მხოლოდ крайние ბურთები მოძრაობენ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+/* ფონზე */
+.hero {
+  position: fixed;
+  inset: 0;
+  background: url("ai.png") center / cover no-repeat;
+  z-index: 1;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+}
+
+/* Canvas */
+#neural-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  mask-image: radial-gradient(circle at 50% 35%, black 40%, transparent 70%);
+}
+
+/* ტექსტი */
+.content {
+  position: relative;
+  z-index: 3;
+  color: white;
+  text-align: center;
+  top: 20%;
+  transform: translateY(-50%);
+  padding: 0 20px;
+}
+
+.content h1 {
+  font-size: 38px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px rgba(0,255,255,0.4);
+}
+
+.subtitle {
+  margin-top: 12px;
+  opacity: 0.85;
+  font-size: 15px;
+}
+
+.warning {
+  margin-top: 18px;
+  padding: 12px;
+  border-left: 3px solid #00ffff;
+  background: rgba(0,255,255,0.08);
+  display: inline-block;
+  font-size: 14px;
+}
+
+/* Newton’s Cradle კონტეინერი
+   ზუსტად თანოსის ხელის ძველ ლოკაციაზე */
+.stones {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+}
+.stone::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  width: 1px;
+  height: 60px;
+  background: rgba(255,255,255,0.35);
+  transform: translateX(-50%);
+   background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.5),
+    rgba(255,255,255,0.1)
+  );
+
+}
+
+
+/* ბურთები */
+.stone {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  position: relative;
+  transform-origin: 50% -260%;
+  cursor: pointer;
+  transition: transform 0.4s ease, filter 0.4s ease;
+  filter: drop-shadow(0 6px 8px rgba(0,0,0,0.35));
+}
+
+
+/* ინდივიდუალური ფერები */
+.stone:nth-child(1) {
+  background: radial-gradient(circle, #00ffff, #006666);
+  box-shadow: 0 0 15px rgba(0,255,255,0.9);
+}
+
+.stone:nth-child(2) {
+  background: radial-gradient(circle, #ff00ff, #660066);
+  box-shadow: 0 0 15px rgba(255,0,255,0.9);
+}
+
+.stone:nth-child(3) {
+  background: radial-gradient(circle, #00ff88, #006644);
+  box-shadow: 0 0 15px rgba(0,255,136,0.9);
+}
+
+.stone:nth-child(4) {
+  background: radial-gradient(circle, #ffd700, #665500);
+  box-shadow: 0 0 15px rgba(255,215,0,0.9);
+}
+
+.stone:nth-child(5) {
+  background: radial-gradient(circle, #ff4444, #661111);
+  box-shadow: 0 0 15px rgba(255,68,68,0.9);
+}
+
+.stone:nth-child(6) {
+  background: radial-gradient(circle, #ffffff, #777777);
+  box-shadow: 0 0 15px rgba(255,255,255,0.9);
+}
+
+/* Hover ეფექტი */
+.stone:hover {
+  transform: scale(1.3);
+  filter: brightness(1.4);
+  box-shadow:
+    0 0 18px rgba(255,255,255,1),
+    0 0 35px currentColor;
+}
+
+/* Tooltip */
+.stone::after {
+  content: attr(data-ai);
+  position: absolute;
+  bottom: 140%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.75);
+  color: #00ffff;
+  padding: 6px 10px;
+  font-size: 11px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.stone:hover::after {
+  opacity: 1;
+}
+
+/* Newton’s Cradle ანიმაცია */
 .stone:first-child {
-  animation: left-hit 1.2s infinite;
+  animation: cradle-left 2.4s ease-in-out infinite;
 }
 
 .stone:last-child {
-  animation: right-hit 1.2s infinite;
+  animation: cradle-right 2.4s ease-in-out infinite;
 }
 
-/* მარცხენა ბურთი */
-@keyframes left-hit {
-  0% {
-    transform: rotate(30deg);
-  }
-
-  18% {
-    transform: rotate(0deg);
-  }
-
-  50% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
+@keyframes cradle-left {
+  0%   { transform: rotate(0deg); }
+  8%   { transform: rotate(32deg); }
+  18%  { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
 }
 
-/* მარჯვენა ბურთი */
-@keyframes right-hit {
-  0% {
-    transform: rotate(0deg);
-  }
 
-  50% {
-    transform: rotate(0deg);
-  }
+@keyframes cradle-right {
+  0%   { transform: rotate(0deg); }
+  62%  { transform: rotate(0deg); }
+  72%  { transform: rotate(-32deg); }
+  82%  { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
 
-  68% {
-    transform: rotate(-30deg);
-  }
 
-  100% {
-    transform: rotate(0deg);
-  }
+/* AI რეჟიმი — გაჩერება და ერთ ფერზე გადასვლა */
+.stones.ai-mode .stone {
+  animation: none !important;
+  background: radial-gradient(circle, #00ffff, #004444) !important;
+  box-shadow: 0 0 20px rgba(0,255,255,1) !important;
+}
+
+.stone:nth-child(1) {
+  animation: cradle-left 2.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.stone:nth-child(6) {
+  animation: cradle-right 2.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
