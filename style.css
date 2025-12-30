@@ -201,3 +201,7 @@ html, body {
 .stone:first-child {
   animation: cradle-left 2s infinite !important;
 }
+body {
+  background: red !important;
+}
+
