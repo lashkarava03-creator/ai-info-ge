@@ -81,13 +81,14 @@ html, body {
 .stone::before {
   content: "";
   position: absolute;
-  top: -40px;
+  top: -60px;
   left: 50%;
   width: 1px;
-  height: 40px;
-  background: rgba(255,255,255,0.3);
+  height: 60px;
+  background: rgba(255,255,255,0.35);
   transform: translateX(-50%);
 }
+
 
 /* ბურთები */
 .stone {
@@ -95,10 +96,9 @@ html, body {
   height: 22px;
   border-radius: 50%;
   position: relative;
-  transform-origin: top center;
-  cursor: pointer;
-  transition: transform 0.4s ease, filter 0.4s ease;
+  transform-origin: 50% -260%;
 }
+
 
 /* ინდივიდუალური ფერები */
 .stone:nth-child(1) {
@@ -172,18 +172,23 @@ html, body {
 }
 
 @keyframes cradle-left {
-  0%   { transform: rotate(0deg); }
-  20%  { transform: rotate(-35deg); }
-  40%  { transform: rotate(0deg); }
-  100% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(32deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 @keyframes cradle-right {
-  0%   { transform: rotate(0deg); }
-  60%  { transform: rotate(0deg); }
-  80%  { transform: rotate(35deg); }
-  100% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-32deg);
+  }
 }
+
 
 /* AI რეჟიმი — გაჩერება და ერთ ფერზე გადასვლა */
 .stones.ai-mode .stone {
@@ -193,9 +198,9 @@ html, body {
 }
 
 .stone:nth-child(1) {
-  animation: cradle-left 2.4s ease-in-out infinite;
+  animation: cradle-left 0.9s alternate ease-in infinite;
 }
 
 .stone:nth-child(6) {
-  animation: cradle-right 2.4s ease-in-out infinite;
+  animation: cradle-right 0.9s alternate ease-out infinite;
 }
