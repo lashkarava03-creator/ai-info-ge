@@ -172,21 +172,19 @@ html, body {
 }
 
 @keyframes cradle-left {
-  0% {
-    transform: rotate(32deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
+  0%   { transform: rotate(0deg); }
+  8%   { transform: rotate(32deg); }
+  18%  { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
 }
 
+
 @keyframes cradle-right {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-32deg);
-  }
+  0%   { transform: rotate(0deg); }
+  62%  { transform: rotate(0deg); }
+  72%  { transform: rotate(-32deg); }
+  82%  { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
 }
 
 
