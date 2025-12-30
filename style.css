@@ -198,9 +198,10 @@ html, body {
 }
 
 .stone:nth-child(1) {
-  animation: cradle-left 0.9s alternate ease-in infinite;
+  animation: cradle-left 2.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
 .stone:nth-child(6) {
-  animation: cradle-right 0.9s alternate ease-out infinite;
+  animation: cradle-right 2.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
+
