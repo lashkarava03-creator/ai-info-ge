@@ -78,6 +78,16 @@ html, body {
   gap: 26px;
   z-index: 5;
 }
+.stone::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  width: 1px;
+  height: 40px;
+  background: rgba(255,255,255,0.3);
+  transform: translateX(-50%);
+}
 
 /* ბურთები */
 .stone {
@@ -180,4 +190,14 @@ html, body {
   animation: none !important;
   background: radial-gradient(circle, #00ffff, #004444) !important;
   box-shadow: 0 0 20px rgba(0,255,255,1) !important;
+}
+.stones.ai-mode .stone {
+  animation: none !important;
+}
+.stone {
+  animation: none !important;
+}
+
+.stone:first-child {
+  animation: cradle-left 2s infinite !important;
 }
