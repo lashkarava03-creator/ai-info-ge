@@ -232,3 +232,16 @@ html, body {
     margin-top: 14px;
   }
 }
+@media (max-width: 768px) {
+  .stones {
+    bottom: 10%;
+    gap: 4px;
+    transform: translateX(-50%) scale(0.9);
+  }
+
+  .stone {
+    width: 18px;
+    height: 18px;
+    transform-origin: 50% -220%;
+  }
+}
