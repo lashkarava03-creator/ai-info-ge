@@ -130,19 +130,40 @@ html, body {
 }
 
 /* HOVER EFFECT */
-.ai-block:hover .ai-block__item {
-  transform: translateY(-6px) scale(1.05);
-  filter: brightness(1.15);
-  box-shadow:
-    0 0 14px rgba(255,255,255,0.35),
-    0 0 28px rgba(0,255,255,0.35);
+.ai-block {
+  --lift: 0;
 }
 
-.ai-block:hover .ai-label {
-  color: #ffffff;
-  transform: translateY(-2px);
-  text-shadow: 0 0 6px rgba(0,255,255,0.6);
+.ai-block:hover {
+  --lift: 1;
+  z-index: 6;
 }
+
+.ai-block:hover + .ai-block,
+.ai-block:has(+ .ai-block:hover) {
+  --lift: 0.5;
+}
+
+.ai-block:hover + .ai-block + .ai-block,
+.ai-block:has(+ .ai-block + .ai-block:hover) {
+  --lift: 0.25;
+}
+
+.ai-block__item {
+  transform: translateY(calc(var(--lift) * -12px)) scale(calc(1 + var(--lift) * 0.05));
+  transition:
+    transform 0.3s cubic-bezier(.2,.8,.2,1),
+    box-shadow 0.3s ease,
+    filter 0.3s ease;
+}
+
+.ai-block:hover .ai-block__item {
+  filter: brightness(1.2);
+  box-shadow:
+    0 10px 25px rgba(0,255,255,0.35),
+    0 0 30px rgba(255,255,255,0.25);
+}
+
 
 /* CLICK FEEL */
 .ai-block:active .ai-block__item {
@@ -186,5 +207,8 @@ html, body {
   #neural-canvas {
     opacity: 0.7;
   }
+}
+#ai-dynamic-text {
+  transition: opacity 0.3s ease;
 }
 
