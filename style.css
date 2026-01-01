@@ -211,4 +211,14 @@ html, body {
 #ai-dynamic-text {
   transition: opacity 0.3s ease;
 }
+#ai-dynamic-text {
+  position: relative;
+  margin-top: 14px;      /* AI წერტილებიდან დაშორება */
+  margin-bottom: 28px;   /* კუბიკებამდე დაშორება */
+  font-size: 15px;
+  opacity: 0.9;
+}
+#ai-dynamic-text {
+  letter-spacing: 0.5px;
+}
 
