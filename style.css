@@ -81,7 +81,7 @@ html, body {
 ===================== */
 .ai-blocks {
   position: absolute;
-  bottom: 18%;
+  bottom: 22%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
