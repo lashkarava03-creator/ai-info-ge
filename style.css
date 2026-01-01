@@ -1,4 +1,6 @@
-/* RESET */
+/* =====================
+   RESET
+===================== */
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +14,9 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
-/* HERO BACKGROUND */
+/* =====================
+   BACKGROUND / HERO
+===================== */
 .hero {
   position: fixed;
   inset: 0;
@@ -27,7 +31,9 @@ html, body {
   background: rgba(0,0,0,0.55);
 }
 
-/* CANVAS AI */
+/* =====================
+   AI CANVAS
+===================== */
 #neural-canvas {
   position: fixed;
   inset: 0;
@@ -36,7 +42,9 @@ html, body {
   mask-image: radial-gradient(circle at 50% 35%, black 40%, transparent 70%);
 }
 
-/* MAIN TEXT */
+/* =====================
+   MAIN CONTENT TEXT
+===================== */
 .content {
   position: relative;
   z-index: 4;
@@ -68,10 +76,9 @@ html, body {
   font-size: 14px;
 }
 
-/* =========================
-   AI BLOCKS (NEW COMPONENT)
-   ========================= */
-
+/* =====================
+   AI BLOCKS (FINAL UI)
+===================== */
 .ai-blocks {
   position: absolute;
   bottom: 18%;
@@ -79,81 +86,73 @@ html, body {
   transform: translateX(-50%);
   display: flex;
   gap: 18px;
-  padding: 14px;
-  border-radius: 18px;
+  padding: 16px 18px;
+  border-radius: 20px;
   backdrop-filter: blur(12px);
   background: rgba(255,255,255,0.06);
   z-index: 5;
 }
 
 .ai-block {
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  flex: calc(0.3 + (var(--lerp, 0) * 1.2));
-  transition: flex 0.25s ease;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
 }
 
+/* CUBE */
 .ai-block__item {
-  width: 100%;
-  aspect-ratio: 1;
+  width: 46px;
+  height: 46px;
   border-radius: 14px;
   background: var(--bg);
-  transform: translateY(calc(var(--lerp, 0) * -55%));
-  transition: transform 0.25s ease;
+  transition: 
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
   filter: drop-shadow(0 8px 14px rgba(0,0,0,0.35));
 }
 
-/* PROXIMITY HOVER LOGIC */
-.ai-block:hover {
-  --lerp: 1;
-  z-index: 6;
-}
-
-.ai-block:hover + .ai-block,
-.ai-block:has(+ .ai-block:hover) {
-  --lerp: 0.55;
-  z-index: 5;
-}
-
-.ai-block:hover + .ai-block + .ai-block,
-.ai-block:has(+ .ai-block + .ai-block:hover) {
-  --lerp: 0.25;
-  z-index: 4;
-}
-
-/* TOOLTIP */
-.ai-block::after {
-  content: attr(data-title);
-  position: absolute;
-  bottom: 130%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
+/* LABEL */
+.ai-label {
+  font-size: 11px;
   font-weight: 500;
-  padding: 6px 10px;
-  border-radius: 8px;
-  background: rgba(0,0,0,0.75);
-  color: #ffffff;
-  opacity: 0;
-  transition: 0.25s;
+  color: rgba(255,255,255,0.75);
+  text-align: center;
+  line-height: 1.2;
   white-space: nowrap;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,255,255,0.15);
+  transition: 
+    color 0.25s ease,
+    transform 0.25s ease,
+    text-shadow 0.25s ease;
+  pointer-events: none;
 }
 
-.ai-block:hover::after {
-  opacity: 1;
+/* HOVER EFFECT */
+.ai-block:hover .ai-block__item {
+  transform: translateY(-6px) scale(1.05);
+  filter: brightness(1.15);
+  box-shadow:
+    0 0 14px rgba(255,255,255,0.35),
+    0 0 28px rgba(0,255,255,0.35);
 }
 
-/* =========================
+.ai-block:hover .ai-label {
+  color: #ffffff;
+  transform: translateY(-2px);
+  text-shadow: 0 0 6px rgba(0,255,255,0.6);
+}
+
+/* CLICK FEEL */
+.ai-block:active .ai-block__item {
+  transform: translateY(-3px) scale(0.98);
+}
+
+/* =====================
    MOBILE OPTIMIZATION
-   ========================= */
-
+===================== */
 @media (max-width: 768px) {
-
   .content {
     top: 18%;
     padding: 0 16px;
@@ -175,16 +174,17 @@ html, body {
   }
 
   .ai-blocks {
-    bottom: 8%;
+    bottom: 12%;
     gap: 12px;
     transform: translateX(-50%) scale(0.9);
   }
 
-  .ai-block::after {
-    display: none; /* hover არ მუშაობს mobile-ზე */
+  .ai-label {
+    font-size: 10px;
   }
 
   #neural-canvas {
     opacity: 0.7;
   }
 }
+
