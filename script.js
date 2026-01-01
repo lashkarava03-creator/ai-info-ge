@@ -1,190 +1,99 @@
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+const canvas = document.getElementById("neural-canvas");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+// ===== SETTINGS =====
+const PARTICLE_COUNT = 220;
+const TEXT = "AI";
+const FORM_SPEED = 0.08;
+const FLOAT_SPEED = 0.4;
+
+// ===== STATE =====
+let mode = "FLOAT"; // FLOAT | FORM | DISPERSE
+let timer = 0;
+let textPoints = [];
+
+// ===== PARTICLES =====
+const particles = [];
+
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * FLOAT_SPEED,
+    vy: (Math.random() - 0.5) * FLOAT_SPEED,
+    r: 2
+  });
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-}
+// ===== TEXT POINTS =====
+function generateTextPoints(text) {
+  const temp = document.createElement("canvas");
+  const tctx = temp.getContext("2d");
 
-/* HERO BACKGROUND */
-.hero {
-  position: fixed;
-  inset: 0;
-  background: url("ai.png") center / cover no-repeat;
-  z-index: 1;
-}
+  temp.width = canvas.width;
+  temp.height = canvas.height;
 
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-}
+  tctx.fillStyle = "white";
+  tctx.textAlign = "center";
+  tctx.textBaseline = "middle";
+  tctx.font = "bold 160px Arial";
+  tctx.fillText(text, canvas.width / 2, canvas.height / 2);
 
-/* CANVAS AI */
-#neural-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  mask-image: radial-gradient(circle at 50% 35%, black 40%, transparent 70%);
-}
+  const data = tctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  const points = [];
 
-/* MAIN TEXT */
-.content {
-  position: relative;
-  z-index: 4;
-  color: white;
-  text-align: center;
-  top: 20%;
-  transform: translateY(-50%);
-  padding: 0 20px;
-}
-
-.content h1 {
-  font-size: 38px;
-  letter-spacing: 2px;
-  text-shadow: 0 0 12px rgba(0,255,255,0.4);
-}
-
-.subtitle {
-  margin-top: 12px;
-  opacity: 0.85;
-  font-size: 15px;
-}
-
-.warning {
-  margin-top: 18px;
-  padding: 12px;
-  border-left: 3px solid #00ffff;
-  background: rgba(0,255,255,0.08);
-  display: inline-block;
-  font-size: 14px;
-}
-
-/* =========================
-   AI BLOCKS (NEW COMPONENT)
-   ========================= */
-
-.ai-blocks {
-  position: absolute;
-  bottom: 12%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 18px;
-  padding: 14px;
-  border-radius: 18px;
-  backdrop-filter: blur(12px);
-  background: rgba(255,255,255,0.06);
-  z-index: 5;
-}
-
-.ai-block {
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  flex: calc(0.3 + (var(--lerp, 0) * 1.2));
-  transition: flex 0.25s ease;
-  position: relative;
-}
-
-.ai-block__item {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 14px;
-  background: var(--bg);
-  transform: translateY(calc(var(--lerp, 0) * -55%));
-  transition: transform 0.25s ease;
-  filter: drop-shadow(0 8px 14px rgba(0,0,0,0.35));
-}
-
-/* PROXIMITY HOVER LOGIC */
-.ai-block:hover {
-  --lerp: 1;
-  z-index: 6;
-}
-
-.ai-block:hover + .ai-block,
-.ai-block:has(+ .ai-block:hover) {
-  --lerp: 0.55;
-  z-index: 5;
-}
-
-.ai-block:hover + .ai-block + .ai-block,
-.ai-block:has(+ .ai-block + .ai-block:hover) {
-  --lerp: 0.25;
-  z-index: 4;
-}
-
-/* TOOLTIP */
-.ai-block::after {
-  content: attr(data-title);
-  position: absolute;
-  bottom: 130%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 6px 10px;
-  border-radius: 8px;
-  background: rgba(0,0,0,0.75);
-  color: #ffffff;
-  opacity: 0;
-  transition: 0.25s;
-  white-space: nowrap;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,255,255,0.15);
-}
-
-.ai-block:hover::after {
-  opacity: 1;
-}
-
-/* =========================
-   MOBILE OPTIMIZATION
-   ========================= */
-
-@media (max-width: 768px) {
-
-  .content {
-    top: 18%;
-    padding: 0 16px;
+  for (let y = 0; y < canvas.height; y += 6) {
+    for (let x = 0; x < canvas.width; x += 6) {
+      const i = (y * canvas.width + x) * 4;
+      if (data[i + 3] > 150) {
+        points.push({ x, y });
+      }
+    }
   }
-
-  .content h1 {
-    font-size: 26px;
-    letter-spacing: 1px;
-  }
-
-  .subtitle {
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .warning {
-    font-size: 13px;
-    margin-top: 14px;
-  }
-
-  .ai-blocks {
-    bottom: 8%;
-    gap: 12px;
-    transform: translateX(-50%) scale(0.9);
-  }
-
-  .ai-block::after {
-    display: none; /* hover არ მუშაობს mobile-ზე */
-  }
-
-  #neural-canvas {
-    opacity: 0.7;
-  }
+  return points;
 }
+
+textPoints = generateTextPoints(TEXT);
+
+// ===== ANIMATION LOOP =====
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach((p, i) => {
+    if (mode === "FORM" && textPoints[i]) {
+      p.x += (textPoints[i].x - p.x) * FORM_SPEED;
+      p.y += (textPoints[i].y - p.y) * FORM_SPEED;
+    } else {
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    }
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(0,255,255,1)";
+    ctx.shadowColor = "rgba(0,255,255,0.9)";
+    ctx.shadowBlur = 10;
+    ctx.fill();
+  });
+
+  timer++;
+
+  if (timer === 180) mode = "FORM";      // AI იკრიბება
+  if (timer === 420) mode = "DISPERSE";  // იფანტება
+  if (timer === 520) mode = "FLOAT";     // თავისუფალი მოძრაობა
+  if (timer > 700) timer = 0;
+
+  requestAnimationFrame(animate);
+}
+
+animate();
