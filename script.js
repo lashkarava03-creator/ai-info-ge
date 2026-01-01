@@ -97,3 +97,28 @@ function animate() {
 }
 
 animate();
+const aiText = document.getElementById("ai-dynamic-text");
+
+const aiDescriptions = {
+  "AI ანალიტიკა": "მონაცემების ანალიზი, პროგნოზები და გადაწყვეტილებები რეალურ დროში",
+  "AI მარკეტინგი": "კლიენტის ქცევის ანალიზი და შედეგზე ორიენტირებული კამპანიები",
+  "AI ავტომატიზაცია": "პროცესების ავტომატიზაცია ნაკლები ხარჯით და მეტი სიჩქარით",
+  "AI კრეატივი": "იდეების გენერაცია, დიზაინი და კონტენტი ხელოვნური ინტელექტით",
+  "AI ბიზნესი": "ბიზნეს გადაწყვეტილებები AI სტრატეგიებზე დაფუძნებით",
+  "AI სწავლა": "ცოდნის მიღება და განვითარება AI დახმარებით"
+};
+
+document.querySelectorAll(".ai-block").forEach(block => {
+  block.addEventListener("click", e => {
+    e.preventDefault();
+
+    const label = block.querySelector(".ai-label").innerText;
+
+    aiText.style.opacity = 0;
+
+    setTimeout(() => {
+      aiText.innerText = aiDescriptions[label];
+      aiText.style.opacity = 1;
+    }, 200);
+  });
+});
