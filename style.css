@@ -1,3 +1,4 @@
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -11,7 +12,7 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
-/* ფონზე */
+/* HERO BACKGROUND */
 .hero {
   position: fixed;
   inset: 0;
@@ -26,19 +27,19 @@ html, body {
   background: rgba(0,0,0,0.55);
 }
 
-/* Canvas */
+/* CANVAS AI */
 #neural-canvas {
   position: fixed;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
   mask-image: radial-gradient(circle at 50% 35%, black 40%, transparent 70%);
 }
 
-/* ტექსტი */
+/* MAIN TEXT */
 .content {
   position: relative;
-  z-index: 3;
+  z-index: 4;
   color: white;
   text-align: center;
   top: 20%;
@@ -67,149 +68,10 @@ html, body {
   font-size: 14px;
 }
 
-/* Newton’s Cradle კონტეინერი
-   ზუსტად თანოსის ხელის ძველ ლოკაციაზე */
-.stones {
-  position: absolute;
-  bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 6px;
-  z-index: 5;
-}
-.stone::before {
-  content: "";
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  width: 1px;
-  height: 60px;
-  background: rgba(255,255,255,0.35);
-  transform: translateX(-50%);
-   background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.5),
-    rgba(255,255,255,0.1)
-  );
+/* =========================
+   AI BLOCKS (NEW COMPONENT)
+   ========================= */
 
-}
-
-
-/* ბურთები */
-.stone {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  position: relative;
-  transform-origin: 50% -260%;
-  cursor: pointer;
-  transition: transform 0.4s ease, filter 0.4s ease;
-  filter: drop-shadow(0 6px 8px rgba(0,0,0,0.35));
-}
-
-
-/* ინდივიდუალური ფერები */
-.stone:nth-child(1) {
-  background: radial-gradient(circle, #00ffff, #006666);
-  box-shadow: 0 0 15px rgba(0,255,255,0.9);
-}
-
-.stone:nth-child(2) {
-  background: radial-gradient(circle, #ff00ff, #660066);
-  box-shadow: 0 0 15px rgba(255,0,255,0.9);
-}
-
-.stone:nth-child(3) {
-  background: radial-gradient(circle, #00ff88, #006644);
-  box-shadow: 0 0 15px rgba(0,255,136,0.9);
-}
-
-.stone:nth-child(4) {
-  background: radial-gradient(circle, #ffd700, #665500);
-  box-shadow: 0 0 15px rgba(255,215,0,0.9);
-}
-
-.stone:nth-child(5) {
-  background: radial-gradient(circle, #ff4444, #661111);
-  box-shadow: 0 0 15px rgba(255,68,68,0.9);
-}
-
-.stone:nth-child(6) {
-  background: radial-gradient(circle, #ffffff, #777777);
-  box-shadow: 0 0 15px rgba(255,255,255,0.9);
-}
-
-
-/* AI რეჟიმი — გაჩერება და ერთ ფერზე გადასვლა */
-.stones.ai-mode .stone {
-  animation: none !important;
-  background: radial-gradient(circle, #00ffff, #004444) !important;
-  box-shadow: 0 0 20px rgba(0,255,255,1) !important;
-}
-
-.stone:nth-child(1) {
-  animation: cradle-left 2.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-
-.stone:nth-child(6) {
-  animation: cradle-right 2.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-@media (max-width: 768px) {
-  .content {
-    top: 18%;
-    padding: 0 16px;
-  }
-
-  .content h1 {
-    font-size: 26px;
-    letter-spacing: 1px;
-  }
-
-  .subtitle {
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .warning {
-    font-size: 13px;
-    margin-top: 14px;
-  }
-}
-@media (max-width: 768px) {
-  .stones {
-    bottom: 10%;
-    gap: 4px;
-    transform: translateX(-50%) scale(0.9);
-  }
-
-  .stone {
-    width: 18px;
-    height: 18px;
-    transform-origin: 50% -220%;
-  }
-}
-@media (max-width: 768px) {
-  .stone:nth-child(1),
-  .stone:nth-child(6) {
-    animation-duration: 3.4s;
-  }
-}
-@media (max-width: 768px) {
-  .stone::after {
-    display: none;
-  }
-}
-@media (max-width: 768px) {
-  #neural-canvas {
-    opacity: 0.7;
-  }
-}
-@media (max-width: 768px) {
-  body {
-    line-height: 1.6;
-  }
-}
 .ai-blocks {
   position: absolute;
   bottom: 12%;
@@ -217,10 +79,10 @@ html, body {
   transform: translateX(-50%);
   display: flex;
   gap: 18px;
-  padding: 12px;
+  padding: 14px;
   border-radius: 18px;
-  backdrop-filter: blur(10px);
-  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.06);
   z-index: 5;
 }
 
@@ -244,45 +106,85 @@ html, body {
   filter: drop-shadow(0 8px 14px rgba(0,0,0,0.35));
 }
 
-/* Hover proximity ეფექტი */
+/* PROXIMITY HOVER LOGIC */
 .ai-block:hover {
   --lerp: 1;
-  z-index: 5;
+  z-index: 6;
 }
 
 .ai-block:hover + .ai-block,
 .ai-block:has(+ .ai-block:hover) {
   --lerp: 0.55;
+  z-index: 5;
 }
 
 .ai-block:hover + .ai-block + .ai-block,
 .ai-block:has(+ .ai-block + .ai-block:hover) {
   --lerp: 0.25;
+  z-index: 4;
 }
 
-/* Tooltip */
+/* TOOLTIP */
 .ai-block::after {
   content: attr(data-title);
   position: absolute;
-  bottom: 120%;
+  bottom: 130%;
   left: 50%;
   transform: translateX(-50%);
   font-size: 12px;
-  color: #00ffff;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.75);
+  color: #ffffff;
   opacity: 0;
   transition: 0.25s;
   white-space: nowrap;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.15);
 }
 
 .ai-block:hover::after {
   opacity: 1;
 }
 
-/* Mobile */
+/* =========================
+   MOBILE OPTIMIZATION
+   ========================= */
+
 @media (max-width: 768px) {
+
+  .content {
+    top: 18%;
+    padding: 0 16px;
+  }
+
+  .content h1 {
+    font-size: 26px;
+    letter-spacing: 1px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .warning {
+    font-size: 13px;
+    margin-top: 14px;
+  }
+
   .ai-blocks {
     bottom: 8%;
     gap: 12px;
     transform: translateX(-50%) scale(0.9);
+  }
+
+  .ai-block::after {
+    display: none; /* hover არ მუშაობს mobile-ზე */
+  }
+
+  #neural-canvas {
+    opacity: 0.7;
   }
 }
