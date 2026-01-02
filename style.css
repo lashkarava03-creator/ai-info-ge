@@ -196,33 +196,17 @@ body {
 }
 
 /* =====================
-   MOBILE
+   MOBILE FIX (PHONES)
 ===================== */
-@media (max-width: 768px) {
-.ai-section-title {
-    white-space: nowrap;
-    font-size: 15px;
-    padding: 6px 12px;
-    bottom: 30%; /* ცოტა მაღლა mobile-ზე */
+@media (max-width: 480px) {
+
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
-}
-  .ai-blocks {
-    bottom: 14%;
-    gap: 10px;
-    padding: 12px;
-  }
-
-  .ai-block__item {
-    width: 40px;
-    height: 40px;
-  }
-
-  .ai-label {
-    font-size: 9px;
-  }
-
-}
   .content {
     top: 18%;
     padding: 0 16px;
@@ -240,24 +224,33 @@ body {
     font-size: 13px;
   }
 
+  /* H2 — ერთ ხაზში, AI-ს ქვემოთ */
   .ai-section-title {
     white-space: nowrap;
     font-size: 15px;
     padding: 6px 12px;
-    bottom: 30%; /* ცოტა მაღლა mobile-ზე */
+    bottom: 30%;
   }
 
+  /* AI კუბიკები */
   .ai-blocks {
-    bottom: 12%;
-    gap: 12px;
+    bottom: 14%;
+    gap: 10px;
+    padding: 12px;
     transform: translateX(-50%) scale(0.9);
   }
 
+  .ai-block__item {
+    width: 40px;
+    height: 40px;
+  }
+
   .ai-label {
-    font-size: 10px;
+    font-size: 9px;
   }
 
   #neural-canvas {
     opacity: 0.7;
   }
 }
+
