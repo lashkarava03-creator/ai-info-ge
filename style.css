@@ -81,7 +81,7 @@ html, body {
 ===================== */
 .ai-section-title {
   position: absolute;
-  bottom: 26%;              /* AI ქვემოთ / კუბიკებზე ზემოთ */
+  bottom: 28%;              /* AI ქვემოთ / კუბიკებზე ზემოთ */
   left: 50%;
   transform: translateX(-50%);
 
@@ -104,7 +104,7 @@ html, body {
 ===================== */
 .ai-blocks {
   position: absolute;
-  bottom: 18%;
+  bottom: 16%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
