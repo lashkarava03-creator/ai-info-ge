@@ -43,7 +43,7 @@ html, body {
 }
 
 /* =====================
-   MAIN CONTENT TEXT
+   MAIN CONTENT (TOP TEXT)
 ===================== */
 .content {
   position: relative;
@@ -77,11 +77,34 @@ html, body {
 }
 
 /* =====================
-   AI BLOCKS (FINAL UI)
+   H2 — BETWEEN AI & BLOCKS
+===================== */
+.ai-section-title {
+  position: absolute;
+  bottom: 26%;              /* AI ქვემოთ / კუბიკებზე ზემოთ */
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 18px;
+  font-weight: 500;
+  color: #eaffff;
+  text-align: center;
+  z-index: 6;
+
+  padding: 8px 16px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  text-shadow: 0 0 8px rgba(0,255,255,0.35);
+}
+
+/* =====================
+   AI BLOCKS (CUBES)
 ===================== */
 .ai-blocks {
   position: absolute;
-  bottom: 22%;
+  bottom: 18%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -99,6 +122,7 @@ html, body {
   align-items: center;
   gap: 6px;
   text-decoration: none;
+  --lift: 0;
 }
 
 /* CUBE */
@@ -107,33 +131,31 @@ html, body {
   height: 46px;
   border-radius: 14px;
   background: var(--bg);
-  transition: 
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    filter 0.25s ease;
+  transform: translateY(calc(var(--lift) * -12px))
+             scale(calc(1 + var(--lift) * 0.05));
+  transition:
+    transform 0.3s cubic-bezier(.2,.8,.2,1),
+    box-shadow 0.3s ease,
+    filter 0.3s ease;
   filter: drop-shadow(0 8px 14px rgba(0,0,0,0.35));
 }
 
-/* LABEL */
+/* LABEL (H3) */
 .ai-label {
   font-size: 11px;
   font-weight: 500;
-  color: rgba(255,255,255,0.75);
+  margin-top: 4px;
+  color: rgba(255,255,255,0.8);
   text-align: center;
   line-height: 1.2;
   white-space: nowrap;
-  transition: 
+  transition:
     color 0.25s ease,
     transform 0.25s ease,
     text-shadow 0.25s ease;
-  pointer-events: none;
 }
 
-/* HOVER EFFECT */
-.ai-block {
-  --lift: 0;
-}
-
+/* HOVER — PROXIMITY EFFECT */
 .ai-block:hover {
   --lift: 1;
   z-index: 6;
@@ -149,14 +171,6 @@ html, body {
   --lift: 0.25;
 }
 
-.ai-block__item {
-  transform: translateY(calc(var(--lift) * -12px)) scale(calc(1 + var(--lift) * 0.05));
-  transition:
-    transform 0.3s cubic-bezier(.2,.8,.2,1),
-    box-shadow 0.3s ease,
-    filter 0.3s ease;
-}
-
 .ai-block:hover .ai-block__item {
   filter: brightness(1.2);
   box-shadow:
@@ -164,16 +178,22 @@ html, body {
     0 0 30px rgba(255,255,255,0.25);
 }
 
+.ai-block:hover .ai-label {
+  color: #ffffff;
+  transform: translateY(-2px);
+  text-shadow: 0 0 6px rgba(0,255,255,0.6);
+}
 
 /* CLICK FEEL */
 .ai-block:active .ai-block__item {
-  transform: translateY(-3px) scale(0.98);
+  transform: translateY(-6px) scale(0.95);
 }
 
 /* =====================
-   MOBILE OPTIMIZATION
+   MOBILE
 ===================== */
 @media (max-width: 768px) {
+
   .content {
     top: 18%;
     padding: 0 16px;
@@ -181,17 +201,19 @@ html, body {
 
   .content h1 {
     font-size: 26px;
-    letter-spacing: 1px;
   }
 
   .subtitle {
     font-size: 14px;
-    line-height: 1.5;
   }
 
   .warning {
     font-size: 13px;
-    margin-top: 14px;
+  }
+
+  .ai-section-title {
+    bottom: 30%;
+    font-size: 16px;
   }
 
   .ai-blocks {
@@ -208,45 +230,3 @@ html, body {
     opacity: 0.7;
   }
 }
-#ai-dynamic-text {
-  transition: opacity 0.3s ease;
-}
-#ai-dynamic-text {
-  position: relative;
-  margin-top: 14px;      /* AI წერტილებიდან დაშორება */
-  margin-bottom: 28px;   /* კუბიკებამდე დაშორება */
-  font-size: 15px;
-  opacity: 0.9;
-}
-#ai-dynamic-text {
-  letter-spacing: 0.5px;
-}
-.ai-section-title {
-  position: absolute;
-  bottom: 26%;              /* ← მთავარი გასაღები */
-  left: 50%;
-  transform: translateX(-50%);
-
-  font-size: 18px;
-  font-weight: 500;
-  color: #eaffff;
-  text-align: center;
-  z-index: 4;
-
-  padding: 8px 16px;
-  border-radius: 14px;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-  text-shadow: 0 0 8px rgba(0,255,255,0.35);
-}
-
-
-.ai-label {
-  font-size: 11px;
-  font-weight: 500;
-  margin-top: 4px;
-  color: rgba(255,255,255,0.8);
-  text-align: center;
-}
-
