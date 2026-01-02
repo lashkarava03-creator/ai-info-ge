@@ -124,8 +124,8 @@ document.querySelectorAll(".ai-block").forEach(block => {
 });
 .ai-section-title {
   position: relative;
-  margin-top: 22px;      /* დაშორება AI წერტილებიდან */
-  margin-bottom: 26px;   /* დაშორება კუბიკებამდე */
+  margin-top: 22px;      
+  margin-bottom: 26px;   
   font-size: 18px;
   font-weight: 500;
   text-align: center;
@@ -140,4 +140,11 @@ document.querySelectorAll(".ai-block").forEach(block => {
   backdrop-filter: blur(6px);
   box-shadow: 0 6px 18px rgba(0,0,0,0.35);
   text-shadow: 0 0 8px rgba(0,255,255,0.35);
+}
+.ai-label {
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 4px;
+  color: rgba(255,255,255,0.8);
+  text-align: center;
 }
