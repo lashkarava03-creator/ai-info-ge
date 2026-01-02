@@ -222,9 +222,10 @@ html, body {
   letter-spacing: 0.5px;
 }
 .ai-section-title {
-  position: relative;
-  margin-top: 22px;      /* დაშორება AI წერტილებიდან */
-  margin-bottom: 26px;   /* დაშორება კუბიკებამდე */
+  display: block;              /* ყველაზე მნიშვნელოვანი */
+  width: fit-content;
+  margin: 24px auto 28px auto; /* ზემოთ | auto ცენტრში | ქვემოთ */
+
   font-size: 18px;
   font-weight: 500;
   text-align: center;
@@ -232,7 +233,6 @@ html, body {
   z-index: 4;
 
   /* ფონზე გამოკვეთა */
-  display: inline-block;
   padding: 8px 16px;
   border-radius: 14px;
   background: rgba(0, 0, 0, 0.35);
@@ -240,6 +240,7 @@ html, body {
   box-shadow: 0 6px 18px rgba(0,0,0,0.35);
   text-shadow: 0 0 8px rgba(0,255,255,0.35);
 }
+
 .ai-label {
   font-size: 11px;
   font-weight: 500;
