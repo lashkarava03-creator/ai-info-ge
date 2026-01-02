@@ -218,8 +218,10 @@ body {
   }
 
   .ai-section-title {
-    bottom: 30%;
-    font-size: 16px;
+    white-space: nowrap;
+    font-size: 15px;
+    padding: 6px 12px;
+    bottom: 30%; /* ცოტა მაღლა mobile-ზე */
   }
 
   .ai-blocks {
