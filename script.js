@@ -99,6 +99,8 @@ function animate() {
 animate();
 const aiText = document.getElementById("ai-dynamic-text");
 
+const aiText = document.getElementById("ai-dynamic-text");
+
 const aiDescriptions = {
   "AI ანალიტიკა": "მონაცემების ანალიზი, პროგნოზები და გადაწყვეტილებები რეალურ დროში",
   "AI მარკეტინგი": "კლიენტის ქცევის ანალიზი და შედეგზე ორიენტირებული კამპანიები",
@@ -113,6 +115,15 @@ document.querySelectorAll(".ai-block").forEach(block => {
     e.preventDefault();
 
     const label = block.querySelector(".ai-label").innerText;
+
+    // ვეუბნებით CSS-ს: ეს ტექსტი ახლა dynamic-ია
+    aiText.classList.add("is-dynamic");
+
+    // ვცვლით ტექსტს
+    aiText.innerText = aiDescriptions[label];
+  });
+});
+
 
     aiText.style.opacity = 0;
 
