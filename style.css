@@ -223,10 +223,10 @@ html, body {
 }
 .ai-section-title {
   position: absolute;
-  top: 60%;                 /* ← ეს არის მთავარი */
+  bottom: 26%;              /* ← მთავარი გასაღები */
   left: 50%;
   transform: translateX(-50%);
-  
+
   font-size: 18px;
   font-weight: 500;
   color: #eaffff;
