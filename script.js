@@ -122,3 +122,22 @@ document.querySelectorAll(".ai-block").forEach(block => {
     }, 200);
   });
 });
+.ai-section-title {
+  position: relative;
+  margin-top: 22px;      /* დაშორება AI წერტილებიდან */
+  margin-bottom: 26px;   /* დაშორება კუბიკებამდე */
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  color: #eaffff;
+  z-index: 4;
+
+  /* ფონზე გამოკვეთა */
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  text-shadow: 0 0 8px rgba(0,255,255,0.35);
+}
