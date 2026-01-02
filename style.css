@@ -81,7 +81,7 @@ html, body {
 ===================== */
 .ai-section-title {
   position: absolute;
-  bottom: 28%;              /* AI ქვემოთ / კუბიკებზე ზემოთ */
+  bottom: 35%;              /* AI ქვემოთ / კუბიკებზე ზემოთ */
   left: 50%;
   transform: translateX(-50%);
 
