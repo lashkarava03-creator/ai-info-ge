@@ -199,7 +199,30 @@ body {
    MOBILE
 ===================== */
 @media (max-width: 768px) {
+.ai-section-title {
+    white-space: nowrap;
+    font-size: 15px;
+    padding: 6px 12px;
+    bottom: 30%; /* ცოტა მაღლა mobile-ზე */
+  }
 
+}
+  .ai-blocks {
+    bottom: 14%;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .ai-block__item {
+    width: 40px;
+    height: 40px;
+  }
+
+  .ai-label {
+    font-size: 9px;
+  }
+
+}
   .content {
     top: 18%;
     padding: 0 16px;
