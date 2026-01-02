@@ -196,10 +196,11 @@ body {
 }
 
 /* =====================
-   MOBILE FIX (PHONES)
+   MOBILE (PHONES ONLY)
 ===================== */
 @media (max-width: 480px) {
 
+  /* iPhone safe area */
   body {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
@@ -207,6 +208,7 @@ body {
     padding-bottom: env(safe-area-inset-bottom);
   }
 
+  /* ზედა კონტენტი */
   .content {
     top: 18%;
     padding: 0 16px;
@@ -214,6 +216,7 @@ body {
 
   .content h1 {
     font-size: 26px;
+    line-height: 1.25;
   }
 
   .subtitle {
@@ -224,12 +227,22 @@ body {
     font-size: 13px;
   }
 
-  /* H2 — ერთ ხაზში, AI-ს ქვემოთ */
+  /* H2 — default ტექსტი (არ ტყდება) */
   .ai-section-title {
     white-space: nowrap;
+    max-width: 100%;
     font-size: 15px;
     padding: 6px 12px;
     bottom: 30%;
+    text-align: center;
+  }
+
+  /* H2 — კუბიკზე დაჭერის შემდეგ (შეიძლება გადაიტყდეს) */
+  .ai-section-title.is-dynamic {
+    white-space: normal;
+    max-width: 90%;
+    line-height: 1.4;
+    word-break: break-word;
   }
 
   /* AI კუბიკები */
@@ -247,10 +260,11 @@ body {
 
   .ai-label {
     font-size: 9px;
+    line-height: 1.2;
   }
 
+  /* AI წერტილები ოდნავ რბილად */
   #neural-canvas {
     opacity: 0.7;
   }
 }
-
