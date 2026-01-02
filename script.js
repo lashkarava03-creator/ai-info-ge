@@ -1,3 +1,4 @@
+// ===== CANVAS SETUP =====
 const canvas = document.getElementById("neural-canvas");
 const ctx = canvas.getContext("2d");
 
@@ -57,6 +58,7 @@ function generateTextPoints(text) {
       }
     }
   }
+
   return points;
 }
 
@@ -97,8 +99,8 @@ function animate() {
 }
 
 animate();
-const aiText = document.getElementById("ai-dynamic-text");
 
+// ===== AI DYNAMIC TEXT =====
 const aiText = document.getElementById("ai-dynamic-text");
 
 const aiDescriptions = {
@@ -116,19 +118,13 @@ document.querySelectorAll(".ai-block").forEach(block => {
 
     const label = block.querySelector(".ai-label").innerText;
 
-    // ვეუბნებით CSS-ს: ეს ტექსტი ახლა dynamic-ია
     aiText.classList.add("is-dynamic");
 
-    // ვცვლით ტექსტს
-    aiText.innerText = aiDescriptions[label];
-  });
-});
-
-
+    // fade out
     aiText.style.opacity = 0;
 
     setTimeout(() => {
-      aiText.innerText = aiDescriptions[label];
+      aiText.innerText = aiDescriptions[label] || "";
       aiText.style.opacity = 1;
     }, 200);
   });
