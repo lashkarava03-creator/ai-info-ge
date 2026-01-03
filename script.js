@@ -117,6 +117,18 @@ const aiDescriptions = {
 document.querySelectorAll(".ai-block").forEach(block => {
 
   const label = block.querySelector(".ai-label").innerText;
+  
+document.querySelectorAll(".ai-block").forEach(block => {
+  block.addEventListener("mouseenter", () => {
+    document.querySelectorAll(".ai-block")
+      .forEach(b => b.classList.remove("is-active"));
+    block.classList.add("is-active");
+  });
+
+  block.addEventListener("mouseleave", () => {
+    block.classList.remove("is-active");
+  });
+});
 
   // Desktop — hover
   block.addEventListener("mouseenter", () => {
