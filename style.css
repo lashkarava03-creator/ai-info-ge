@@ -274,3 +274,10 @@ body {
     opacity: 0.7;
   }
 }
+.ai-hint {
+  margin-top: 10px;
+  font-size: 13px;
+  opacity: 0.7;
+  text-align: center;
+  color: #cceeee;
+}
