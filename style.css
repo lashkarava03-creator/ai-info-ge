@@ -194,6 +194,12 @@ body {
 .ai-block:active .ai-block__item {
   transform: translateY(-6px) scale(0.95);
 }
+.ai-block.is-active .ai-block__item {
+  box-shadow:
+    0 0 20px rgba(0,255,255,0.6),
+    0 0 40px rgba(255,255,255,0.35);
+  transform: translateY(-8px) scale(1.08);
+}
 
 /* =====================
    MOBILE (PHONES ONLY)
