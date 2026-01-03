@@ -100,7 +100,9 @@ function animate() {
 
 animate();
 
-// ===== AI DYNAMIC TEXT =====
+/* =====================
+   AI TEXT HOVER / TOUCH
+===================== */
 const aiText = document.getElementById("ai-dynamic-text");
 
 const aiDescriptions = {
@@ -113,19 +115,29 @@ const aiDescriptions = {
 };
 
 document.querySelectorAll(".ai-block").forEach(block => {
-  block.addEventListener("click", e => {
-    e.preventDefault();
 
-    const label = block.querySelector(".ai-label").innerText;
+  const label = block.querySelector(".ai-label").innerText;
 
+  // Desktop — hover
+  block.addEventListener("mouseenter", () => {
     aiText.classList.add("is-dynamic");
-
-    // fade out
     aiText.style.opacity = 0;
 
     setTimeout(() => {
-      aiText.innerText = aiDescriptions[label] || "";
+      aiText.innerText = aiDescriptions[label];
       aiText.style.opacity = 1;
-    }, 200);
+    }, 150);
   });
+
+  // Mobile — touch
+  block.addEventListener("touchstart", () => {
+    aiText.classList.add("is-dynamic");
+    aiText.style.opacity = 0;
+
+    setTimeout(() => {
+      aiText.innerText = aiDescriptions[label];
+      aiText.style.opacity = 1;
+    }, 150);
+  });
+
 });
