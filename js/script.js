@@ -100,10 +100,12 @@ function animate() {
 
 animate();
 
-/* =====================
-   AI TEXT HOVER / TOUCH
-===================== */
-// თუ ეს არის AI ანალიტიკის გვერდი — აღარ გავუშვათ კუბების ანიმაცია
+/* ================================
+   MAIN PAGE – AI BLOCK ANIMATION
+   ================================ */
+
+// ეს კოდი იმუშავებს მხოლოდ მაშინ,
+// თუ გვერდი არ არის AI ანალიტიკა
 if (!document.body.classList.contains("page-analytics")) {
 
   const aiText = document.getElementById("ai-dynamic-text");
@@ -119,7 +121,7 @@ if (!document.body.classList.contains("page-analytics")) {
 
   document.querySelectorAll(".ai-block").forEach(block => {
 
-    const label = block.querySelector(".ai-label").innerText;
+    const label = block.querySelector(".ai-label")?.innerText;
 
     block.addEventListener("mouseenter", () => {
       document.querySelectorAll(".ai-block")
@@ -137,85 +139,87 @@ if (!document.body.classList.contains("page-analytics")) {
     });
 
   });
-
 }
 
+/* ================================
+   AI ANALYTICS – SNAKE ANIMATION
+   ================================ */
 
-  // Desktop — hover
-  block.addEventListener("mouseenter", () => {
-    aiText.classList.add("is-dynamic");
-    aiText.style.opacity = 0;
-
-    setTimeout(() => {
-      aiText.innerText = aiDescriptions[label];
-      aiText.style.opacity = 1;
-    }, 150);
-  });
-
-  // Mobile — touch
-  block.addEventListener("touchstart", () => {
-    aiText.classList.add("is-dynamic");
-    aiText.style.opacity = 0;
-
-    setTimeout(() => {
-      aiText.innerText = aiDescriptions[label];
-      aiText.style.opacity = 1;
-    }, 150);
-  });
-
-});
-// Snake animation scaffold — მხოლოდ AI ანალიტიკის გვერდზე
 if (document.body.classList.contains("page-analytics")) {
 
-  const snakeCanvas = document.getElementById("analytics-snake");
-  const ctx = snakeCanvas.getContext("2d");
+  const canvas = document.getElementById("analytics-snake");
+  const ctx = canvas.getContext("2d");
 
-  function resizeSnakeCanvas() {
-    snakeCanvas.width = window.innerWidth;
-    snakeCanvas.height = window.innerHeight;
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
   }
 
-  resizeSnakeCanvas();
-  window.addEventListener("resize", resizeSnakeCanvas);
+  resize();
+  window.addEventListener("resize", resize);
 
- // Snake animation scaffold — მხოლოდ AI ანალიტიკის გვერდზე
-if (document.body.classList.contains("page-analytics")) {
-
-  const snakeCanvas = document.getElementById("analytics-snake");
-  const ctx = snakeCanvas.getContext("2d");
-
-  function resizeSnakeCanvas() {
-    snakeCanvas.width = window.innerWidth;
-    snakeCanvas.height = window.innerHeight;
-  }
-
-  resizeSnakeCanvas();
-  window.addEventListener("resize", resizeSnakeCanvas);
-
-  // გველის თავი (ერთი წერტილი)
-  const snakeHead = {
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
+  // გველის თავი
+  const snake = {
+    x: canvas.width / 2,
+    y: canvas.height / 2,
     r: 6
   };
 
-  function snakeLoop() {
-    ctx.clearRect(0, 0, snakeCanvas.width, snakeCanvas.height);
+  // „ანალიტიკური AI წერტილები“
+  const foods = [
+    { x: 200, y: 200 },
+    { x: canvas.width - 300, y: 300 },
+    { x: 400, y: canvas.height - 250 },
+    { x: canvas.width - 500, y: canvas.height - 180 }
+  ];
 
+  const speed = 0.6;
+
+  function distance(a, b) {
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // საკვები
+    foods.forEach(f => {
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = "#7dd3fc";
+      ctx.fill();
+    });
+
+    if (foods.length) {
+      let target = foods[0];
+      let min = distance(snake, target);
+
+      foods.forEach(f => {
+        const d = distance(snake, f);
+        if (d < min) {
+          min = d;
+          target = f;
+        }
+      });
+
+      const angle = Math.atan2(target.y - snake.y, target.x - snake.x);
+      snake.x += Math.cos(angle) * speed;
+      snake.y += Math.sin(angle) * speed;
+
+      if (min < snake.r + 4) {
+        foods.splice(foods.indexOf(target), 1);
+      }
+    }
+
+    // გველის თავი
     ctx.beginPath();
-    ctx.arc(snakeHead.x, snakeHead.y, snakeHead.r, 0, Math.PI * 2);
+    ctx.arc(snake.x, snake.y, snake.r, 0, Math.PI * 2);
     ctx.fillStyle = "#00ffff";
     ctx.fill();
 
-    requestAnimationFrame(snakeLoop);
+    requestAnimationFrame(loop);
   }
 
-  snakeLoop();
+  loop();
 }
-  const foods = [
-    { x: 200, y: 200 },
-    { x: window.innerWidth - 250, y: 300 },
-    { x: 400, y: window.innerHeight - 300 },
-    { x: window.innerWidth - 500, y: window.innerHeight - 200 }
-  ];
 
