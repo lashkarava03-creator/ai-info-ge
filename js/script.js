@@ -103,32 +103,43 @@ animate();
 /* =====================
    AI TEXT HOVER / TOUCH
 ===================== */
-const aiText = document.getElementById("ai-dynamic-text");
+// თუ ეს არის AI ანალიტიკის გვერდი — აღარ გავუშვათ კუბების ანიმაცია
+if (!document.body.classList.contains("page-analytics")) {
 
-const aiDescriptions = {
-  "AI ანალიტიკა": "მონაცემების ანალიზი, პროგნოზები და გადაწყვეტილებები რეალურ დროში",
-  "AI მარკეტინგი": "კლიენტის ქცევის ანალიზი და შედეგზე ორიენტირებული კამპანიები",
-  "AI ავტომატიზაცია": "პროცესების ავტომატიზაცია ნაკლები ხარჯით და მეტი სიჩქარით",
-  "AI კრეატივი": "იდეების გენერაცია, დიზაინი და კონტენტი ხელოვნური ინტელექტით",
-  "AI ბიზნესი": "ბიზნეს გადაწყვეტილებები AI სტრატეგიებზე დაფუძნებით",
-  "AI სწავლა": "ცოდნის მიღება და განვითარება AI დახმარებით"
-};
+  const aiText = document.getElementById("ai-dynamic-text");
 
-document.querySelectorAll(".ai-block").forEach(block => {
+  const aiDescriptions = {
+    "AI ანალიტიკა": "მონაცემების ანალიზი, პროგნოზები და გადაწყვეტილებები რეალურ დროში",
+    "AI მარკეტინგი": "კლიენტის ქცევის ანალიზი და შედეგზე ორიენტირებული კამპანიები",
+    "AI ავტომატიზაცია": "პროცესების ავტომატიზაცია ნაკლები ხარჯით და მეტი სიჩქარით",
+    "AI კრეატივი": "იდეების გენერაცია, დიზაინი და კონტენტი ხელოვნური ინტელექტით",
+    "AI ბიზნესი": "ბიზნეს გადაწყვეტილებები AI სტრატეგიებზე დაფუძნებით",
+    "AI სწავლა": "ცოდნის მიღება და განვითარება AI დახმარებით"
+  };
 
-  const label = block.querySelector(".ai-label").innerText;
-  
-document.querySelectorAll(".ai-block").forEach(block => {
-  block.addEventListener("mouseenter", () => {
-    document.querySelectorAll(".ai-block")
-      .forEach(b => b.classList.remove("is-active"));
-    block.classList.add("is-active");
+  document.querySelectorAll(".ai-block").forEach(block => {
+
+    const label = block.querySelector(".ai-label").innerText;
+
+    block.addEventListener("mouseenter", () => {
+      document.querySelectorAll(".ai-block")
+        .forEach(b => b.classList.remove("is-active"));
+
+      block.classList.add("is-active");
+
+      if (aiText && aiDescriptions[label]) {
+        aiText.textContent = aiDescriptions[label];
+      }
+    });
+
+    block.addEventListener("mouseleave", () => {
+      block.classList.remove("is-active");
+    });
+
   });
 
-  block.addEventListener("mouseleave", () => {
-    block.classList.remove("is-active");
-  });
-});
+}
+
 
   // Desktop — hover
   block.addEventListener("mouseenter", () => {
