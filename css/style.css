@@ -328,3 +328,11 @@ body {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
 }
+/* Snake canvas – test mode (hidden) */
+#analytics-snake {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0; /* ჯერ არ ჩანს */
+}
