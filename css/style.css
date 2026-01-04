@@ -330,9 +330,11 @@ body {
 }
 /* Snake canvas – test mode (hidden) */
 #analytics-snake {
+ #analytics-snake {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0; /* ჯერ არ ჩანს */
+  opacity: 1; /* ახლა ჩანს */
 }
+
