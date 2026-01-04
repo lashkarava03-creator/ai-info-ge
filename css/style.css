@@ -286,3 +286,6 @@ body {
 .hero-analytics {
   background: url("../images/ai-analytics.jpg.png") center / cover no-repeat;
 }
+.page-analytics #ai-dynamic-text {
+  animation: none !important;
+}
