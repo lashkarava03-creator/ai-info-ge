@@ -335,6 +335,14 @@ body {
   z-index: -1; /* ტექსტის უკან */
   pointer-events: none;
 }
+/* AI Analytics layout fix */
+.page-analytics .content {
+  margin-top: 140px;
+}
+
+.page-analytics .analytics-sections {
+  margin-top: 60px;
+}
 
 
 
