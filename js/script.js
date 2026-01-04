@@ -106,7 +106,9 @@ animate();
 
 // ეს კოდი იმუშავებს მხოლოდ მაშინ,
 // თუ გვერდი არ არის AI ანალიტიკა
-if (!document.body.classList.contains("page-analytics")) {
+if (document.body.classList.contains("page-analytics")) {
+  return;
+}
 
   const aiText = document.getElementById("ai-dynamic-text");
 
