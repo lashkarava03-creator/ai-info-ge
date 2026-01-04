@@ -282,3 +282,7 @@ body {
   text-align: center;
   color: #cceeee;
 }
+/* AI Analytics page background */
+.hero-analytics {
+  background: url("../images/ai-analytics.jpg.png") center / cover no-repeat;
+}
