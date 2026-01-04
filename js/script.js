@@ -164,3 +164,28 @@ if (!document.body.classList.contains("page-analytics")) {
   });
 
 });
+// Snake animation scaffold — მხოლოდ AI ანალიტიკის გვერდზე
+if (document.body.classList.contains("page-analytics")) {
+
+  const snakeCanvas = document.getElementById("analytics-snake");
+  const ctx = snakeCanvas.getContext("2d");
+
+  function resizeSnakeCanvas() {
+    snakeCanvas.width = window.innerWidth;
+    snakeCanvas.height = window.innerHeight;
+  }
+
+  resizeSnakeCanvas();
+  window.addEventListener("resize", resizeSnakeCanvas);
+
+  // 🔧 test loop — ჯერ არაფერს ვხატავთ
+  function snakeLoop() {
+    // მომდევნო ეტაპზე აქ იქნება:
+    // - გველი
+    // - წერტილები
+    // - მოძრაობა
+    requestAnimationFrame(snakeLoop);
+  }
+
+  snakeLoop();
+}
