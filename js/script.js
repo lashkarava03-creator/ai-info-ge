@@ -178,14 +178,38 @@ if (document.body.classList.contains("page-analytics")) {
   resizeSnakeCanvas();
   window.addEventListener("resize", resizeSnakeCanvas);
 
-  // 🔧 test loop — ჯერ არაფერს ვხატავთ
+ // Snake animation scaffold — მხოლოდ AI ანალიტიკის გვერდზე
+if (document.body.classList.contains("page-analytics")) {
+
+  const snakeCanvas = document.getElementById("analytics-snake");
+  const ctx = snakeCanvas.getContext("2d");
+
+  function resizeSnakeCanvas() {
+    snakeCanvas.width = window.innerWidth;
+    snakeCanvas.height = window.innerHeight;
+  }
+
+  resizeSnakeCanvas();
+  window.addEventListener("resize", resizeSnakeCanvas);
+
+  // გველის თავი (ერთი წერტილი)
+  const snakeHead = {
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+    r: 6
+  };
+
   function snakeLoop() {
-    // მომდევნო ეტაპზე აქ იქნება:
-    // - გველი
-    // - წერტილები
-    // - მოძრაობა
+    ctx.clearRect(0, 0, snakeCanvas.width, snakeCanvas.height);
+
+    ctx.beginPath();
+    ctx.arc(snakeHead.x, snakeHead.y, snakeHead.r, 0, Math.PI * 2);
+    ctx.fillStyle = "#00ffff";
+    ctx.fill();
+
     requestAnimationFrame(snakeLoop);
   }
 
   snakeLoop();
 }
+
