@@ -212,4 +212,10 @@ if (document.body.classList.contains("page-analytics")) {
 
   snakeLoop();
 }
+  const foods = [
+    { x: 200, y: 200 },
+    { x: window.innerWidth - 250, y: 300 },
+    { x: 400, y: window.innerHeight - 300 },
+    { x: window.innerWidth - 500, y: window.innerHeight - 200 }
+  ];
 
