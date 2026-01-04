@@ -26,16 +26,17 @@ body {
 .hero {
   position: fixed;
   inset: 0;
-  background: url(""../images/ai.png"") center / cover no-repeat;
-  z-index: 1;
+  background: url("../images/ai.png") center / cover no-repeat;
+  z-index: -2;
 }
 
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
 }
+
 
 /* =====================
    AI CANVAS
